@@ -1,0 +1,31 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 22
+    commands:
+      - echo Installing dependencies...
+      - npm config set registry https://registry.npmjs.org/
+      - npm ci
+  pre_build:
+    commands:
+      - echo Running pre-build steps...
+  build:
+    commands:
+      - echo Building the Vite React app...
+      - npm run build
+  post_build:
+    commands:
+      - echo Build completed successfully
+      - echo "Deploying to S3..."
+      - aws s3 sync dist/ s3://foodflickbucket --delete
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: dist
+
+cache:
+  paths:
+    - node_modules/**/*
