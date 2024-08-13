@@ -1,3 +1,20 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+.slider {
+  /* Custom styles for the slider */
+  accent-color: #4B5A35; 
+}
+
+.slider::-webkit-slider-thumb {
+  background-color: #4B5A35;
+}
+
+.slider::-moz-range-thumb {
+  background-color: #4B5A35;
+}
+
+.blur {
+  filter: blur(5px);
+}
