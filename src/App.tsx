@@ -1,13 +1,18 @@
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css'
+import LandingPage from './components/views/LandingPage';
 import { Authenticator } from '@aws-amplify/ui-react'
-import HelloWorld from './components/HelloWorld'
 
 function App() {
 
   return (
     <>
       <Authenticator>
-        <HelloWorld/>
+      <Router>
+        <Routes>
+          <Route path="/" Component={LandingPage}/>
+        </Routes>
+      </Router>
       </Authenticator>
     </>
   )
