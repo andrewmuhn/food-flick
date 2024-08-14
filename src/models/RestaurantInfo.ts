@@ -21,6 +21,7 @@ export interface RestaurantInfo {
   display_address: Array<string>;
   rating: Int16Array;
   url: string;
+  price: string;
   coordinates: Coordinates;
   image_url: string;
   categories: Array<object>;
