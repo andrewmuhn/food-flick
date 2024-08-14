@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
-// import LandingPage from "./components/views/LandingPage";
+import LandingPage from "./components/views/LandingPage";
 import { Authenticator } from "@aws-amplify/ui-react";
 import VotingPage from "./components/views/VotingPage";
 
@@ -10,7 +10,7 @@ function App() {
       <Authenticator>
         <Router>
           <Routes>
-            {/* <Route path="/" Component={LandingPage} /> */}
+            <Route path="/" Component={LandingPage} />
             <Route path="/vote" Component={VotingPage} />
           </Routes>
         </Router>

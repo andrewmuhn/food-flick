@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getYelpInfo } from "../../services/YelpService";
-import { RestaurantInfo } from "../../models/RestaurantInfo";
+import CarouselCard from "../CarouselCard";
+import { RestaurantInfo } from "../../models/Restaurant";
 
 const VotingPage: React.FC = () => {
   const [restaurants, setRestaurants] = useState<RestaurantInfo[]>([]);
@@ -18,9 +19,24 @@ const VotingPage: React.FC = () => {
     fetchRestaurants();
   }, []);
 
+  useEffect(() => {
+    console.log("Restaurants state: ", restaurants);
+  }, [restaurants]);
+
   return (
     <div>
-      <p>Restaurants</p>
+      {restaurants.length > 0 ? (
+        restaurants.map((restaurant, index) => (
+          <CarouselCard
+            key={restaurant.id}
+            restaurant={restaurant}
+            cardIndex={index}
+            resturantArrayLength={restaurants.length}
+          />
+        ))
+      ) : (
+        <p>No restaurants available</p>
+      )}
     </div>
   );
 };

@@ -13,11 +13,11 @@ function createYelpStarsUrl(rating: number): string {
 
   console.log("half", 0.5 % 1);
   if (stars < 1) {
-    yelpStarsUrl = `Review_Ribbon_small_16_half`;
+    yelpStarsUrl = `Review_Ribbon_small_16_half@1x.png`;
   } else if (stars % 1 === 0) {
-    yelpStarsUrl = `Review_Ribbon_small_16_${Math.trunc(stars)}`;
+    yelpStarsUrl = `Review_Ribbon_small_16_${Math.trunc(stars)}@1x.png`;
   } else {
-    yelpStarsUrl = `Review_Ribbon_small_16_${Math.trunc(stars)}_half`;
+    yelpStarsUrl = `Review_Ribbon_small_16_${Math.trunc(stars)}_half@1x.png`;
   }
 
   return yelpStarsUrl;

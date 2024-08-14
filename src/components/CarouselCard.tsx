@@ -38,16 +38,15 @@ const CarouselCard: React.FC<CarouselCardProps> = ({
           <h1 className="hover:cursor-pointer mt-2 text-gray-900 font-bold text-2xl tracking-tight">
             {restaurant.name}
           </h1>
+          <img
+            className="rounded-t-lg mx-auto my-4"
+            src={
+              "src/assets/YelpAssets/Desktop/small_16/" + restaurant.stars_url
+            }
+          />
           <p className="hover:cursor-pointer py-3 text-gray-600 leading-6">
-            {restaurant.rating}
+            {restaurant.address}
           </p>
-          <p className="hover:cursor-pointer py-3 text-gray-600 leading-6">
-            {restaurant.price}
-          </p>
-          <p className="hover:cursor-pointer py-3 text-gray-600 leading-6">
-            {restaurant.display_address}
-          </p>
-          <img className="rounded-t-lg" src={'src/assets/YelpAssets/Desktop/small_16/' + restaurant.stars_url} />
         </div>
         {/* <!-- controls --> */}
         <div className="absolute top-1/2 w-full flex justify-between z-20">
