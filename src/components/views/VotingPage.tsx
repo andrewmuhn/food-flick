@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { RestaurantInfo } from "../../models/RestaurantInfo";
 import { getYelpInfo } from "../../services/YelpService";
+import { RestaurantInfo } from "../../models/RestaurantInfo";
 
 const VotingPage: React.FC = () => {
   const [restaurants, setRestaurants] = useState<RestaurantInfo[]>([]);
