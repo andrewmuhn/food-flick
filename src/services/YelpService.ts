@@ -3,10 +3,16 @@ import { YelpData } from "../models/YelpData";
 import yelpApiInstance from "../utils/YelpApiInstance";
 import { mapYelpDataToRestaurantInfo } from "../utils/MapYelpToDatabase";
 
-export const getYelpInfo = async (): Promise<RestaurantInfo[]> => {
+export const getYelpInfo = async (
+  location: string,
+  radius: string,
+  price: string
+): Promise<RestaurantInfo[]> => {
   const params = {
     term: "restaurants",
-    location: "San Francisco",
+    location: location,
+    // radius: radius,
+    // price: price,
     sort_by: "best_match",
     limit: 10,
   };

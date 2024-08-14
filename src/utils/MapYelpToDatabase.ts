@@ -30,6 +30,7 @@ export function mapYelpDataToRestaurantInfo(
   const restaurants: RestaurantInfo[] = [];
 
   yelpData.forEach((element) => {
+    console.log(element.business_hours);
     restaurants.push({
       yelp_id: element.id,
       name: element.name,
@@ -43,7 +44,7 @@ export function mapYelpDataToRestaurantInfo(
       price: element.price,
       review_count: element.review_count,
       distance: element.distance,
-      business_hours: element.business_hours?.open,
+      business_hours: element.business_hours && element.business_hours[0]?.open,
       transactions: element.transactions,
       stars_url: createYelpStarsUrl(element.rating),
     });

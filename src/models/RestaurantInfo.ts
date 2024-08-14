@@ -5,10 +5,6 @@ export interface OpenHours {
   day: number;
 }
 
-export interface Categories {
-  title: string;
-}
-
 export interface RestaurantInfo {
   yelp_id: string;
   name: string;
@@ -19,7 +15,7 @@ export interface RestaurantInfo {
   longitude: number;
   price?: string;
   image_url: string;
-  categories: Categories[];
+  categories: Array<string>;
   review_count: number;
   distance: number;
   business_hours?: Array<OpenHours>;
