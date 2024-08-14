@@ -16,6 +16,7 @@ export const getYelpInfo = async (): Promise<RestaurantInfo[]> => {
       params,
     });
     console.log(response.data);
+    console.log("resp.buisness", response.data.businesses);
     const resp = mapYelpDataToRestaurantInfo(response.data.businesses);
     console.log("response", resp);
     return resp;

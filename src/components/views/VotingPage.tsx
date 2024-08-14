@@ -28,7 +28,7 @@ const VotingPage: React.FC = () => {
       {restaurants.length > 0 ? (
         restaurants.map((restaurant, index) => (
           <CarouselCard
-            key={restaurant.id}
+            key={restaurant.yelp_id}
             restaurant={restaurant}
             cardIndex={index}
             resturantArrayLength={restaurants.length}

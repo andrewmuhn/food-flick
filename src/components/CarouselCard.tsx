@@ -45,6 +45,9 @@ const CarouselCard: React.FC<CarouselCardProps> = ({
             }
           />
           <p className="hover:cursor-pointer py-3 text-gray-600 leading-6">
+            {restaurant.price ? restaurant.price : "N/A"}
+          </p>
+          <p className="hover:cursor-pointer py-3 text-gray-600 leading-6">
             {restaurant.address}
           </p>
         </div>

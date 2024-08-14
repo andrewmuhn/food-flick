@@ -18,15 +18,21 @@ export interface Coordinates {
   latitude: number;
   longitude: number;
 }
+export interface Categories {
+  title: string;
+}
 export interface YelpData {
   id: string;
   name: string;
   rating: number;
   location: Location;
   url: string;
+  price?: string;
   coordinates: Coordinates;
   image_url: string;
   categories: Array<object>;
+  review_count: number;
   distance: number;
-  business_hours: BusinessHours;
+  business_hours?: BusinessHours;
+  transactions: Array<string>;
 }
