@@ -19,11 +19,14 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({ isOpen, o
     const [locationInput, setLocationInput] = useState<string>("");
     const [suggestions, setSuggestions] = useState<string[]>([]);
     const [selectedSuggestion, setSelectedSuggestion] = useState<string>("");
-    const [radius, setRadius] = useState<number>(0);
-    const [priceRange, setPriceRange] = useState<number>(1); // Default value
+    // const [radius, setRadius] = useState<number>(0);
+    // const [priceRange, setPriceRange] = useState<number>(1);
+    const [radiusInput, setRadiusInput] = useState("");
+    const [priceInput, setPriceInput] = useState("");
     const [isVegetarian, setIsVegetarian] = useState<boolean>(false);
     const [isVegan, setIsVegan] = useState<boolean>(false);
     const [isValidLocation, setIsValidLocation] = useState<boolean>(true); // For location validation
+    const [restaurants, setRestaurants] = useState<RestaurantInfo[]>([]);
 
     // Function to fetch location suggestions
     const fetchLocationSuggestions = useCallback(
@@ -62,13 +65,13 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({ isOpen, o
         setSuggestions([]);
     };
 
-    const handleRadiusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setRadius(Number(e.target.value));
-    };
+    // const handleRadiusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     setRadius(Number(e.target.value));
+    // };
 
-    const handlePriceRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPriceRange(Number(e.target.value));
-    };
+    // const handlePriceRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     setPriceRange(Number(e.target.value));
+    // };
 
     const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, checked } = e.target;
@@ -116,99 +119,117 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({ isOpen, o
         } else {
             setIsValidLocation(false); // Set invalid location state
         }
+        const fetchRestaurants = async () => {
+            console.log(locationInput, radiusInput, priceInput);
+            try {
+              const restaurantResults = await getYelpInfo(
+                locationInput,
+                radiusInput,
+                priceInput
+              );
+              console.log("Api data: ", restaurantResults);
+              setRestaurants(restaurantResults);
+            } catch (error) {
+              console.error("Failed to fetch list of restaurants", error);
+            }
+          }
     };
 
     if (!isOpen) return null;
 
     return (
         <div className="fixed inset-0 flex items-center justify-center z-55">
-            <div className="bg-white p-6 rounded-lg shadow-lg w-2/4 h-50">
-                <h2 className="text-xl font-bold mb-4">Filter Restaurants</h2>
-                <form onSubmit={handleRestaurantSubmit}>
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700">Location</label>
-                        <input
-                            type="text"
-                            className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                            required
-                            value={locationInput}
-                            onChange={(e) => setLocationInput(e.target.value)}
-                            placeholder="Enter location"
-                        />
-                        {suggestions.length > 0 && (
-                            <ul className="mt-2 border border-gray-300 rounded-md bg-white">
-                                {suggestions.map((suggestion, index) => (
-                                    <li
-                                        key={index}
-                                        onClick={() => handleSuggestionSelect(suggestion)}
-                                        className="p-2 hover:bg-gray-200 cursor-pointer"
-                                    >
-                                        {suggestion}
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
-                        {!isValidLocation && (
-                            <p className="text-red-500 text-xs mt-2">Please enter a valid location.</p>
-                        )}
-                    </div>
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700">Radius (in miles)</label>
-                        <input
-                            type="text" // Changed to text input to use placeholder
-                            value={radius === 0 ? '' : radius} // Show empty string when default value is 0
-                            onChange={handleRadiusChange}
-                            className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                            placeholder="MAX 25"
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700">Price Range</label>
-                        <div className="flex justify-between text-xs px-1">
-                            <span className="w-8 text-left">$</span>
-                            <span className="w-8 text-left">$$</span>
-                            <span className="w-8">$$$</span>
-                            <span className="w-8 text-right">$$$$</span>
-                            <span className="w-8">$$$$$</span>
-                        </div>
-                        <input
-                            type="range"
-                            min="1"
-                            max="5"
-                            value={priceRange}
-                            onChange={handlePriceRangeChange}
-                            className="mt-1 block w-full slider"
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <input
-                            type="checkbox"
-                            name="vegetarian"
-                            checked={isVegetarian}
-                            onChange={handleCheckboxChange}
-                        />
-                        <label className="ml-2 text-sm font-medium text-gray-700">Vegetarian</label>
-                    </div>
-                    <div className="mb-4">
-                        <input
-                            type="checkbox"
-                            name="vegan"
-                            checked={isVegan}
-                            onChange={handleCheckboxChange}
-                        />
-                        <label className="ml-2 text-sm font-medium text-gray-700">Vegan</label>
-                    </div>
-                    <button
-                        type="submit"
-                        className="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green hover:bg-green-dark focus:bg-green-dark focus:outline-none"
-                    >
-                        Apply Filters
-                    </button>
-                </form>
-            </div>
+          <div className="bg-white p-6 rounded-lg shadow-lg w-2/4 h-50">
+            <h2 className="text-xl font-bold mb-4">Filter Restaurants</h2>
+            <form onSubmit={handleRestaurantSubmit}>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">
+                  Location
+                </label>
+                <input
+                  type="text"
+                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                  required
+                  id="location"
+                  value={locationInput}
+                  onChange={(e) => setLocationInput(e.target.value)}
+                  placeholder="Enter location"
+                />
+                {suggestions.length > 0 && (
+                  <ul className="mt-2 border border-gray-300 rounded-md bg-white">
+                    {suggestions.map((suggestion, index) => (
+                      <li
+                        key={index}
+                        onClick={() => handleSuggestionSelect(suggestion)}
+                      >
+                        {suggestion}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">
+                  Radius(in miles)
+                </label>
+                <input
+                  type="number"
+                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                  placeholder="MAX 25"
+                  max="25"
+                  id="miles"
+                  value={radiusInput}
+                  onChange={(e) => setRadiusInput(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">
+                  Price Range
+                </label>
+                <div className="flex justify-between text-xs px-1" id="price">
+                  <span className="w-8 text-left">$</span>
+                  <span className="w-8 text-left">$$</span>
+                  <span className="w-8">$$$</span>
+                  <span className="w-8 text-right">$$$$</span>
+                  <span className="w-8">$$$$$</span>
+                </div>
+                <input
+                  type="range"
+                  min="1"
+                  max="5"
+                  value={priceInput}
+                  className="mt-1 block w-full slider"
+                  onChange={(e) => setPriceInput(e.target.value)}
+                />
+              </div>
+              <div className="mb-4">
+                <input
+                  type="checkbox"
+                  name="vegetarian"
+                  id="vegetarian"
+                  value="vegetarian"
+                />
+                <label className="ml-2 text-sm font-medium text-gray-700">
+                  Vegetarian
+                </label>
+              </div>
+              <div className="mb-4">
+                <input type="checkbox" name="vegan" id="vegan" value="vegan" />
+                <label className="ml-2 text-sm font-medium text-gray-700">
+                  Vegan
+                </label>
+              </div>
+              <button
+                type="submit"
+                className="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green hover:bg-green-dark focus:bg-green-dark focus:outline-none"
+              >
+                Apply Filters
+              </button>
+            </form>
+          </div>
         </div>
     );
 };
 
 export default FilterRestaurantModal;
-

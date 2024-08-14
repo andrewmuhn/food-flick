@@ -13,9 +13,12 @@ export interface RestaurantInfo {
   url: string;
   latitude: number;
   longitude: number;
+  price?: string;
   image_url: string;
-  categories: Array<object>;
+  categories: Array<string>;
+  review_count: number;
   distance: number;
-  business_hours: Array<OpenHours>;
+  business_hours?: Array<OpenHours>;
   stars_url: string;
+  transactions: Array<string>;
 }
