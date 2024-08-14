@@ -5,26 +5,17 @@ export interface OpenHours {
   day: number;
 }
 
-export interface BusinessHours {
-  open: Array<OpenHours>;
-  hours_type: string;
-  is_open_now: boolean;
-}
-
-export interface Coordinates {
+export interface RestaurantInfo {
+  yelp_id: string;
+  name: string;
+  rating: number;
+  address: string;
+  url: string;
   latitude: number;
   longitude: number;
-}
-export interface RestaurantInfo {
-  id: string;
-  name: string;
-  display_address: Array<string>;
-  rating: Int16Array;
-  url: string;
-  price: string;
-  coordinates: Coordinates;
   image_url: string;
   categories: Array<object>;
   distance: number;
-  business_hours: BusinessHours;
+  business_hours: Array<OpenHours>;
+  stars_url: string;
 }
