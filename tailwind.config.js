@@ -5,10 +5,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        green: {
-          DEFAULT: "#4B5A35",
-          dark: "#3E4A2B", // Slightly darker shade for hover/focus
-        },
+        green: "#4B5A35",
+        orange: "#CA6749",
+        brown: "#928368",
       },
     },
   },
