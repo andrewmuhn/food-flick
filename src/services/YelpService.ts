@@ -11,7 +11,7 @@ export const getYelpInfo = async (
   const params = {
     term: "restaurants",
     location: location,
-    // radius: radius,
+    radius: Number(radius) * 1609, // Convert miles to meters (Yelp API requires meters)
     price: price,
     sort_by: "best_match",
     limit: 10,
@@ -22,7 +22,6 @@ export const getYelpInfo = async (
       params,
     });
     console.log(response.data);
-    console.log("resp.buisness", response.data.businesses);
     const resp = mapYelpDataToRestaurantInfo(response.data.businesses);
     console.log("response", resp);
     return resp;

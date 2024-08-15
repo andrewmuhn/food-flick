@@ -24,8 +24,6 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
   const [locationInput, setLocationInput] = useState<string>("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [selectedSuggestion, setSelectedSuggestion] = useState<string>("");
-  // const [radius, setRadius] = useState<number>(0);
-  // const [priceRange, setPriceRange] = useState<number>(1);
   const [radiusInput, setRadiusInput] = useState("");
   const [priceInput, setPriceInput] = useState("");
   const [isVegetarian, setIsVegetarian] = useState<boolean>(false);
@@ -75,14 +73,6 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
     setSuggestions([]);
   };
 
-  // const handleRadiusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //     setRadius(Number(e.target.value));
-  // };
-
-  // const handlePriceRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //     setPriceRange(Number(e.target.value));
-  // };
-
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
     if (name === "vegetarian") {
@@ -92,46 +82,48 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
     }
   };
 
-  // Function to validate location using Yelp
-  const validateLocationWithYelp = async (location: string) => {
-    try {
-      const response = await yelpApiInstance.get("/businesses/search", {
-        params: {
-          location,
-          term: "restaurants", // To ensure we are searching for restaurants
-          limit: 1, // We only need to check if there is at least one result
-        },
-      });
-
-      // Check if Yelp returns any businesses
-      return response.data.businesses.length > 0;
-    } catch (error) {
-      console.error("Error validating location with Yelp:", error);
-      return false;
-    }
-  };
-
   const handleRestaurantSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const validLocation = await validateLocationWithYelp(locationInput);
-
-    if (validLocation) {
+  
+    const location = locationInput;
+    const term = "restaurants";
+    const limit = 10; // Increase the limit if you want to fetch more restaurants
+    
+    const requestUrl = `/businesses/search?location=${encodeURIComponent(location)}&term=${term}&limit=${limit}`;
+    
+    console.log("Request URL:", requestUrl);
+  
+    try {
+      const response = await yelpApiInstance.get(requestUrl);
+      console.log("Yelp API response:", response.data);
+  
+      // Validate based on the actual response data
+      const businesses = response.data.businesses;
+      if (businesses.length < 3) {
+        console.log("Less than 3 businesses found");
+        setIsValidLocation(false);
+        return;
+      }
+  
+      console.log("3 or more businesses found");
+      setIsValidLocation(true); // Clear the error state if valid response
+  
+      // Apply filters if the number of restaurants is sufficient
       onApplyFilters({
         location: locationInput,
-        radius,
-        priceRange,
+        radius: Number(radiusInput),
+        priceRange: Number(priceInput),
         isVegetarian,
         isVegan,
       });
-      setIsValidLocation(true); // Reset valid location state
-      onClose(); // Close the modal
-    } else {
-      setIsValidLocation(false); // Set invalid location state
+      onClose();
+    } catch (error) {
+      console.error("Error fetching restaurants from Yelp:", error);
+      setIsValidLocation(false);
     }
-
+  
     const fetchRestaurants = async () => {
-      console.log(locationInput, radiusInput, priceInput);
+      console.log("Fetching restaurants with:", locationInput, radiusInput, priceInput);
       try {
         const restaurantResults = await getYelpInfo(
           locationInput,
@@ -144,9 +136,9 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
         console.error("Failed to fetch list of restaurants", error);
       }
     };
-
+  
     fetchRestaurants();
-  };
+  };  
 
   if (!isOpen) return null;
 
@@ -239,6 +231,11 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
           >
             Apply Filters
           </button>
+          {!isValidLocation && (
+            <p className="text-red-500 mt-2">
+              Not enough restaurants found. Please update your location and/or filters.
+            </p>
+          )}
         </form>
       </div>
     </div>
