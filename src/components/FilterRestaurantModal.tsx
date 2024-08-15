@@ -1,25 +1,19 @@
 import React, { useState, useCallback, useEffect } from "react";
-import geoapifyApiInstance from "../../utils/GeoapifyApiInstance";
-import yelpApiInstance from "../../utils/YelpApiInstance"; // Import your Yelp API instance
+import geoapifyApiInstance from "../utils/GeoapifyApiInstance";
 import debounce from "lodash.debounce";
-import { getYelpInfo } from "../../services/YelpService";
+import { getYelpInfo } from "../services/YelpService";
+import { RestaurantInfo } from "../models/RestaurantInfo";
 
 interface FilterRestaurantModalProps {
   isOpen: boolean;
-  onClose: () => void;
-  onApplyFilters: (filters: {
-    location: string;
-    radius: number;
-    priceRange: number;
-    isVegetarian: boolean;
-    isVegan: boolean;
-  }) => void;
+  dinnerPartyId: number;
+  handleRedirect: (id: number) => void;
 }
 
 const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
   isOpen,
-  onClose,
-  onApplyFilters,
+  handleRedirect,
+  dinnerPartyId,
 }) => {
   const [locationInput, setLocationInput] = useState<string>("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
@@ -28,7 +22,7 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
   const [priceInput, setPriceInput] = useState("");
   const [isVegetarian, setIsVegetarian] = useState<boolean>(false);
   const [isVegan, setIsVegan] = useState<boolean>(false);
-  const [isValidLocation, setIsValidLocation] = useState<boolean>(true); // For location validation
+  const [isValidYelpCall, setIsValidYelpCall] = useState<boolean>(true);
   const [restaurants, setRestaurants] = useState<RestaurantInfo[]>([]);
 
   // Function to fetch location suggestions
@@ -73,72 +67,46 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
     setSuggestions([]);
   };
 
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = e.target;
-    if (name === "vegetarian") {
-      setIsVegetarian(checked);
-    } else if (name === "vegan") {
-      setIsVegan(checked);
-    }
-  };
+  // const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { name, checked } = e.target;
+  //   if (name === "vegetarian") {
+  //     setIsVegetarian(checked);
+  //   } else if (name === "vegan") {
+  //     setIsVegan(checked);
+  //   }
+  // };
 
   const handleRestaurantSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-  
-    const location = locationInput;
-    const term = "restaurants";
-    const limit = 10; // Increase the limit if you want to fetch more restaurants
-    
-    const requestUrl = `/businesses/search?location=${encodeURIComponent(location)}&term=${term}&limit=${limit}`;
-    
-    console.log("Request URL:", requestUrl);
-  
-    try {
-      const response = await yelpApiInstance.get(requestUrl);
-      console.log("Yelp API response:", response.data);
-  
-      // Validate based on the actual response data
-      const businesses = response.data.businesses;
-      if (businesses.length < 3) {
-        console.log("Less than 3 businesses found");
-        setIsValidLocation(false);
-        return;
-      }
-  
-      console.log("3 or more businesses found");
-      setIsValidLocation(true); // Clear the error state if valid response
-  
-      // Apply filters if the number of restaurants is sufficient
-      onApplyFilters({
-        location: locationInput,
-        radius: Number(radiusInput),
-        priceRange: Number(priceInput),
-        isVegetarian,
-        isVegan,
-      });
-      onClose();
-    } catch (error) {
-      console.error("Error fetching restaurants from Yelp:", error);
-      setIsValidLocation(false);
-    }
-  
+
     const fetchRestaurants = async () => {
-      console.log("Fetching restaurants with:", locationInput, radiusInput, priceInput);
+      console.log(
+        "Fetching restaurants with:",
+        locationInput,
+        radiusInput,
+        priceInput
+      );
       try {
         const restaurantResults = await getYelpInfo(
           locationInput,
           radiusInput,
           priceInput
         );
-        console.log("Api data: ", restaurantResults);
         setRestaurants(restaurantResults);
+
+        if (restaurantResults.length >= 3) {
+          setIsValidYelpCall(true);
+          handleRedirect(dinnerPartyId);
+        } else {
+          setIsValidYelpCall(false);
+        }
       } catch (error) {
         console.error("Failed to fetch list of restaurants", error);
       }
     };
-  
-    fetchRestaurants();
-  };  
+
+    await fetchRestaurants();
+  };
 
   if (!isOpen) return null;
 
@@ -146,6 +114,12 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
     <div className="fixed inset-0 flex items-center justify-center z-55">
       <div className="bg-white p-6 rounded-lg shadow-lg w-2/4 h-50">
         <h2 className="text-xl font-bold mb-4">Filter Restaurants</h2>
+        {!isValidYelpCall && (
+          <p>
+            Not enough restaurants found. Please update your location and/or
+            filters.
+          </p>
+        )}
         <form onSubmit={handleRestaurantSubmit}>
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">
@@ -197,12 +171,11 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
               <span className="w-8 text-left">$$</span>
               <span className="w-8">$$$</span>
               <span className="w-8 text-right">$$$$</span>
-              <span className="w-8">$$$$$</span>
             </div>
             <input
               type="range"
               min="1"
-              max="5"
+              max="4"
               value={priceInput}
               className="mt-1 block w-full slider"
               onChange={(e) => setPriceInput(e.target.value)}
@@ -231,11 +204,6 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
           >
             Apply Filters
           </button>
-          {!isValidLocation && (
-            <p className="text-red-500 mt-2">
-              Not enough restaurants found. Please update your location and/or filters.
-            </p>
-          )}
         </form>
       </div>
     </div>

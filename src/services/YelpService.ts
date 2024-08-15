@@ -21,9 +21,7 @@ export const getYelpInfo = async (
     const response = await yelpApiInstance.get<YelpData[]>("", {
       params,
     });
-    console.log(response.data);
     const resp = mapYelpDataToRestaurantInfo(response.data.businesses);
-    console.log("response", resp);
     return resp;
   } catch (error) {
     console.error("Error fetching data from Yelp API:", error);
