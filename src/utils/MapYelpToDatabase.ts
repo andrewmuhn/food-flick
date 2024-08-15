@@ -9,9 +9,6 @@ function createYelpStarsUrl(rating: number): string {
     stars = roundHalf(rating);
   }
 
-  console.log("stars", stars);
-
-  console.log("half", 0.5 % 1);
   if (stars < 1) {
     yelpStarsUrl = `Review_Ribbon_small_16_half@1x.png`;
   } else if (stars % 1 === 0) {
@@ -33,6 +30,7 @@ export function mapYelpDataToRestaurantInfo(
   const restaurants: RestaurantInfo[] = [];
 
   yelpData.forEach((element) => {
+    console.log(element.business_hours);
     restaurants.push({
       yelp_id: element.id,
       name: element.name,
@@ -42,9 +40,12 @@ export function mapYelpDataToRestaurantInfo(
       latitude: element.coordinates.latitude,
       longitude: element.coordinates.longitude,
       image_url: element.image_url,
-      categories: element.categories,
+      categories: element.categories.map((category: any) => category.title),
+      price: element.price,
+      review_count: element.review_count,
       distance: element.distance,
-      business_hours: element.business_hours.open,
+      business_hours: element.business_hours && element.business_hours[0]?.open,
+      transactions: element.transactions,
       stars_url: createYelpStarsUrl(element.rating),
     });
   });
