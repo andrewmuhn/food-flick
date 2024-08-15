@@ -12,7 +12,7 @@ export const getYelpInfo = async (
     term: "restaurants",
     location: location,
     // radius: radius,
-    // price: price,
+    price: price,
     sort_by: "best_match",
     limit: 10,
   };
