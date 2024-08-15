@@ -23,7 +23,7 @@ const VotingButtons: React.FC<VotingButtonsProps> = ({ restaurantId }) => {
         </svg>
       </label>
 
-      <label className="inline-block text-orange cursor-pointer translate-x-5 bg-white rounded-full shadow-md active:translate-y-0.5 hover:bg-gray-200">
+      <label className="inline-block text-green cursor-pointer translate-x-5 bg-white rounded-full shadow-md active:translate-y-0.5 hover:bg-gray-200">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-10 w-10"

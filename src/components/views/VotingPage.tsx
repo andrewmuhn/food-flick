@@ -3,6 +3,7 @@ import { getYelpInfo } from "../../services/YelpService";
 import CarouselCard from "../CarouselCard";
 import { RestaurantInfo } from "../../models/Restaurant";
 import VotingButtons from "../VotingButtons";
+import LockVotesButton from "../LockVotesButton";
 
 const VotingPage: React.FC = () => {
   const [restaurants, setRestaurants] = useState<RestaurantInfo[]>([]);
@@ -39,6 +40,7 @@ const VotingPage: React.FC = () => {
         <p>No restaurants available</p>
       )}
       <VotingButtons restaurantId={1} />
+      <LockVotesButton dinnerPartyId={2} />
     </div>
   );
 };
