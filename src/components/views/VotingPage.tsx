@@ -19,10 +19,6 @@ const VotingPage: React.FC = () => {
   //   fetchRestaurants();
   // }, []);
 
-  useEffect(() => {
-    console.log("Restaurants state: ", restaurants);
-  }, [restaurants]);
-
   return (
     <div>
       {restaurants.length > 0 ? (
