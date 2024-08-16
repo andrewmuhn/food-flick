@@ -30,14 +30,27 @@ const LandingPage: React.FC = () => {
   };
 
   return (
-    <div>
-      <div>
-        <h1 className="text-3xl font-bold text-center mt-8">
-          Welcome to FoodFlick!
-        </h1>
+    <div className="relative">
+      {/* Hero Image */}
+      <div className="relative">
+        {/* Hero Image */}
+        <div className="relative h-64 bg-gray-800">
+          <img 
+            src="src/assets/foodflick.jpg" 
+            alt="Hero" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black opacity-50"></div> {/* Overlay */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <h1 className="text-7xl font-bold text-white text-center">
+              Welcome to FoodFlick!
+            </h1>
+          </div>
+        </div>
       </div>
+
       <div
-        className={`p-6 max-w-md mx-auto bg-white rounded-xl shadow-md space-y-4 ${
+        className={`p-6 max-w-md mx-auto bg-white rounded-xl shadow-md space-y-4 mt-8 ${
           isPartyModalOpen || isRestaurantModalOpen ? "blur" : ""
         }`}
       >
@@ -50,14 +63,12 @@ const LandingPage: React.FC = () => {
         />
       </div>
 
-      {/* Create Party Modal */}
       <CreatePartyModal
         isOpen={isPartyModalOpen}
         onClose={() => setIsPartyModalOpen(false)}
         handlePartyModalSubmit={handlePartyModalSubmit}
       />
 
-      {/* Filter Restaurant Modal */}
       <FilterRestaurantModal
         isOpen={isRestaurantModalOpen}
         handleRedirect={handleRedirect}
