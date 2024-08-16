@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { getYelpInfo } from "../../services/YelpService";
 import CarouselCard from "../CarouselCard";
 import { Restaurant } from "../../models/Restaurant";
 import { getDinnerPartyById } from "../../services/DinnerPartyService";

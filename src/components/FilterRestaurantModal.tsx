@@ -2,10 +2,8 @@ import React, { useState, useCallback, useEffect } from "react";
 import geoapifyApiInstance from "../utils/GeoapifyApiInstance";
 import debounce from "lodash.debounce";
 import { getYelpInfo } from "../services/YelpService";
-import { RestaurantInfo } from "../models/RestaurantInfo";
 import { createRestaurantForDinnerParty } from "../utils/DinnerPartyApiMappers";
 import { postNewRestaurant } from "../services/RestaurantService";
-import { Restaurant } from "../models/Restaurant";
 
 interface FilterRestaurantModalProps {
   isOpen: boolean;
