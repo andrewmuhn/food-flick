@@ -19,4 +19,16 @@ export const getAllDinnerParties = async (): Promise<DinnerParty[]> => {
         console.error('Failed to fetch dinner parties:', error);
         throw error
     }
-};
+}
+
+export const getDinnerPartyById = async (dinnerPartyId:number): Promise<DinnerParty> => {
+    try {
+        const response = await dinnerPartyApiInstance.get<DinnerParty>(`/dinner-party/${dinnerPartyId}`);
+        return response.data;
+    } catch (error) {
+        
+        console.error('Failed to fetch dinner parties:', error);
+        throw error
+    }
+    
+}
