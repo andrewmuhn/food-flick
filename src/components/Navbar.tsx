@@ -4,7 +4,6 @@ export default function NavBar() {
   const handleSignOut = async () => {
     try {
       await signOut();
-      // Redirect to the login page or homepage after sign out
       window.location.href = "/";
     } catch (error) {
       console.error("Error signing out: ", error);
