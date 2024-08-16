@@ -10,5 +10,3 @@ export const postNewRestaurant = async (restaurant: Restaurant, dinnerPartyId: n
         throw error;
     }
 }
-
-}
