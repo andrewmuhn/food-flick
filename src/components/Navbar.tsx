@@ -1,4 +1,16 @@
+import { signOut } from "aws-amplify/auth";
+
 export default function NavBar() {
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      // Redirect to the login page or homepage after sign out
+      window.location.href = "/";
+    } catch (error) {
+      console.error("Error signing out: ", error);
+    }
+  };
+
   return (
     <nav className="bg-white max-w-full border-gray-200">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-2">
@@ -42,12 +54,12 @@ export default function NavBar() {
               </a>
             </li>
             <li>
-              <a
-                href="#"
+              <button
+                onClick={handleSignOut}
                 className="block py-2 px-3 text-grey rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green md:p-0"
               >
                 Sign Out
-              </a>
+              </button>
             </li>
           </ul>
         </div>
