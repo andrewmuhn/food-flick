@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import LandingPage from "./components/views/LandingPage";
 import { Authenticator } from "@aws-amplify/ui-react";
+import VotingPage from "./components/views/VotingPage";
 import NavBar from "./components/Navbar";
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" Component={LandingPage} />
+            <Route path="/vote" Component={VotingPage} />
           </Routes>
         </Router>
       </Authenticator>
