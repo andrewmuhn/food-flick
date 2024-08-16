@@ -3,6 +3,9 @@ import geoapifyApiInstance from "../utils/GeoapifyApiInstance";
 import debounce from "lodash.debounce";
 import { getYelpInfo } from "../services/YelpService";
 import { RestaurantInfo } from "../models/RestaurantInfo";
+import { createRestaurantForDinnerParty } from "../utils/DinnerPartyApiMappers";
+import { postNewRestaurant } from "../services/RestaurantService";
+import { Restaurant } from "../models/Restaurant";
 
 interface FilterRestaurantModalProps {
   isOpen: boolean;
@@ -23,7 +26,6 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
   const [isVegetarian, setIsVegetarian] = useState<boolean>(false);
   const [isVegan, setIsVegan] = useState<boolean>(false);
   const [isValidYelpCall, setIsValidYelpCall] = useState<boolean>(true);
-  const [restaurants, setRestaurants] = useState<RestaurantInfo[]>([]);
 
   // Function to fetch location suggestions
   const fetchLocationSuggestions = useCallback(
@@ -92,14 +94,19 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
           radiusInput,
           priceInput
         );
-        setRestaurants(restaurantResults);
 
-        if (restaurantResults.length >= 3) {
-          setIsValidYelpCall(true);
-          handleRedirect(dinnerPartyId);
-        } else {
-          setIsValidYelpCall(false);
+        if (restaurantResults.length < 3) {
+          setIsValidYelpCall(false)
         }
+
+
+        restaurantResults.forEach(async restaurant => {
+          const createdRestaurant = createRestaurantForDinnerParty(restaurant, dinnerPartyId);
+          await postNewRestaurant(createdRestaurant, dinnerPartyId);
+        });
+
+        setIsValidYelpCall(true);
+        handleRedirect(dinnerPartyId);
       } catch (error) {
         console.error("Failed to fetch list of restaurants", error);
       }
