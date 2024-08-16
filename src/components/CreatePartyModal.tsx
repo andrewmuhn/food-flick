@@ -1,20 +1,25 @@
 import React, { useState } from 'react';
+import { postNewDinnerParty } from '../services/DinnerPartyService';
+import { createDinnerParty } from '../utils/DinnerPartyApiMappers';
+import { DinnerParty } from '../models/DinnerParty';
 
 interface CreatePartyModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onSubmit: (partyDetails: { name: string; date: string; time: string; strategy: string; }) => void;
+    handlePartyModalSubmit: (dinnerParty: DinnerParty) => void;
 }
 
-const CreatePartyModal: React.FC<CreatePartyModalProps> = ({ isOpen, onClose, onSubmit }) => {
+const CreatePartyModal: React.FC<CreatePartyModalProps> = ({ isOpen, onClose, handlePartyModalSubmit }) => {
     const [name, setName] = useState<string>('');
     const [date, setDate] = useState<string>('');
     const [time, setTime] = useState<string>('');
     const [strategy, setStrategy] = useState<string>('');
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        onSubmit({ name, date, time, strategy });
+        const dinnerPartyResponse = await postNewDinnerParty(createDinnerParty(name, date, time, strategy));
+        console.log(dinnerPartyResponse);
+        handlePartyModalSubmit(dinnerPartyResponse)
         onClose();
     };
 
@@ -64,8 +69,7 @@ const CreatePartyModal: React.FC<CreatePartyModalProps> = ({ isOpen, onClose, on
                             required
                         >
                             <option value="">Select strategy</option>
-                            <option value="strategy1">Strategy 1</option>
-                            <option value="strategy2">Strategy 2</option>
+                            <option value="DEFAULT">Default</option>
                         </select>
                     </div>
                     <button

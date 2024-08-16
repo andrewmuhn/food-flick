@@ -13,7 +13,7 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" Component={LandingPage} />
-            <Route path="/vote" Component={VotingPage} />
+            <Route path="/vote/:dinnerPartyId" Component={VotingPage} />
           </Routes>
         </Router>
       </Authenticator>
