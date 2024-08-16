@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import CreatePartyModal from "../CreatePartyModal"; // Adjust path as needed
 import FilterRestaurantModal from "../FilterRestaurantModal"; // Adjust path as needed
+import { DinnerParty } from "../../models/DinnerParty";
 
 const LandingPage: React.FC = () => {
   const [selectedDinnerParty, setSelectedDinnerParty] = useState<string>("");
@@ -15,9 +16,10 @@ const LandingPage: React.FC = () => {
     setIsPartyModalOpen(true);
   };
 
-  const handlePartyModalSubmit = (partyDetails: any) => {
-    console.log("Party details:", partyDetails);
+  const handlePartyModalSubmit = (dinnerParty: DinnerParty) => {
+    console.log("Dinner Party:", dinnerParty);
     setIsPartyModalOpen(false);
+    setDinnerPartyId(dinnerParty.dinner_party_id);
     setIsRestaurantModalOpen(true);
   };
 
@@ -79,8 +81,7 @@ const LandingPage: React.FC = () => {
       <CreatePartyModal
         isOpen={isPartyModalOpen}
         onClose={() => setIsPartyModalOpen(false)}
-        onSubmit={handlePartyModalSubmit}
-        setDinnerPartyId={setDinnerPartyId}
+        handlePartyModalSubmit={handlePartyModalSubmit}
       />
 
       {/* Filter Restaurant Modal */}
