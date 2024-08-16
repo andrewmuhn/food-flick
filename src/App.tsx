@@ -3,11 +3,13 @@ import "./App.css";
 import LandingPage from "./components/views/LandingPage";
 import { Authenticator } from "@aws-amplify/ui-react";
 import VotingPage from "./components/views/VotingPage";
+import NavBar from "./components/Navbar";
 
 function App() {
   return (
     <>
       <Authenticator>
+        <NavBar />
         <Router>
           <Routes>
             <Route path="/" Component={LandingPage} />
