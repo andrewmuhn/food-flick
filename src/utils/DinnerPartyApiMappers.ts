@@ -1,6 +1,7 @@
 import { DinnerParty } from "../models/DinnerParty"
 import { Restaurant } from "../models/Restaurant";
 import { RestaurantInfo } from "../models/RestaurantInfo";
+import { Vote } from "../models/Vote";
 import { VotingStrategy } from "../models/VotingStrategy";
 
 export const createDinnerParty = (name: string, date: string, time: string, strategy: string): DinnerParty => {
@@ -18,4 +19,12 @@ export const createRestaurantForDinnerParty = (yelpMetaData: RestaurantInfo, din
     restaurant.yelpMetaData = yelpMetaData;
     
     return restaurant;
+}
+
+export const createVoteForRestaurant = (restaurantId: number, vote: boolean): Vote => {
+    const newVote = new Vote();
+    newVote.vote = vote;
+    newVote.restaurant_id = restaurantId;
+
+    return newVote;
 }
