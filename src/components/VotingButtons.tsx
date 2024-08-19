@@ -1,12 +1,24 @@
+import { postNewVote } from "../services/VoteService";
+import { createVoteForRestaurant } from "../utils/DinnerPartyApiMappers";
+
 interface VotingButtonsProps {
   restaurantId: number;
 }
 
+const handleVoteFalse = async (restaurantId:number) => {
+  const createdVote = createVoteForRestaurant(restaurantId, false);
+  await postNewVote(createdVote, restaurantId);
+}
+
+const handleVoteTrue = async (restaurantId:number) => {
+  const createdVote = createVoteForRestaurant(restaurantId, true);
+  await postNewVote(createdVote, restaurantId);
+}
+
 const VotingButtons: React.FC<VotingButtonsProps> = ({ restaurantId }) => {
-  console.log(restaurantId);
   return (
     <div className="flex flex-row justify-center">
-      <div>
+      <div onClick={() => handleVoteFalse(restaurantId)}>
       <label className="text-orange cursor-pointer translate-x-5 bg-white rounded-full shadow-md active:translate-y-0.5 hover:bg-gray-200">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -25,7 +37,7 @@ const VotingButtons: React.FC<VotingButtonsProps> = ({ restaurantId }) => {
       </label>
       </div>
 
-      <div>
+      <div onClick={() => handleVoteTrue(restaurantId)}>
       <label className="text-green cursor-pointer translate-x-5 bg-white rounded-full shadow-md active:translate-y-0.5 hover:bg-gray-200">
         <svg
           xmlns="http://www.w3.org/2000/svg"
