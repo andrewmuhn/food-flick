@@ -1,5 +1,6 @@
 import React from "react";
 import { Restaurant } from "../models/Restaurant";
+import VotingButtons from "./VotingButtons";
 
 interface CarouselCardProps {
   restaurant: Restaurant;
@@ -72,7 +73,7 @@ const CarouselCard: React.FC<CarouselCardProps> = ({
           </label>
           <label
             htmlFor={nextCard}
-            className="inline-block text-orange cursor-pointer translate-x-5 bg-white rounded-full shadow-md active:translate-y-0.5"
+            className="inline-block text-orange cursor-pointer translate-x-2 bg-white rounded-full shadow-md active:translate-y-0.5"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -88,6 +89,9 @@ const CarouselCard: React.FC<CarouselCardProps> = ({
             </svg>
           </label>
         </div>
+        <div className="flex justify-center w-full">
+            <VotingButtons restaurantId={restaurant.restaurant_id} />
+          </div>
       </div>
     </div>
   );

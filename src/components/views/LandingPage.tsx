@@ -26,7 +26,7 @@ const LandingPage: React.FC = () => {
 
   const handleRedirect = (dinnerPartyId: number) => {
     // Redirect or proceed to /vote
-    window.location.href = `/vote/${dinnerPartyId}`; // Adjust this line based on your routing setup
+    window.location.href = `/vote/${dinnerPartyId}`;
   };
 
   return (
