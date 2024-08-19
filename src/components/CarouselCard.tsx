@@ -33,7 +33,10 @@ const CarouselCard: React.FC<CarouselCardProps> = ({
       />
       {/* <!-- content --> */}
       <div className="w-96 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-lg transition-all duration-300 opacity-0 peer-checked:opacity-100 peer-checked:z-10 z-0">
-        <img className="rounded-t-lg w-96 h-64" src={restaurant.yelpMetaData.image_url} />
+        <img
+          className="rounded-t-lg w-96 h-64"
+          src={restaurant.yelpMetaData.image_url}
+        />
         <div className="py-4 px-8">
           <h1 className="hover:cursor-pointer mt-2 text-gray-900 font-bold text-2xl tracking-tight">
             {restaurant.yelpMetaData.name}
@@ -41,11 +44,13 @@ const CarouselCard: React.FC<CarouselCardProps> = ({
           <img
             className="rounded-t-lg mx-auto my-4"
             src={
-              "src/assets/YelpAssets/Desktop/small_16/" + restaurant.yelpMetaData.stars_url
+              "/src/assets/YelpAssets/Desktop/small_16/" + restaurant.yelpMetaData.stars_url
             }
           />
           <p className="hover:cursor-pointer py-3 text-gray-600 leading-6">
-            {restaurant.yelpMetaData.price ? restaurant.yelpMetaData.price : "N/A"}
+            {restaurant.yelpMetaData.price
+              ? restaurant.yelpMetaData.price
+              : "N/A"}
           </p>
           <p className="hover:cursor-pointer py-3 text-gray-600 leading-6">
             {restaurant.yelpMetaData.address}

@@ -85,12 +85,15 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
         );
 
         if (restaurantResults.length < 3) {
-          setIsValidYelpCall(false)
+          setIsValidYelpCall(false);
+          return;
         }
 
-
-        restaurantResults.forEach(async restaurant => {
-          const createdRestaurant = createRestaurantForDinnerParty(restaurant, dinnerPartyId);
+        restaurantResults.forEach(async (restaurant) => {
+          const createdRestaurant = createRestaurantForDinnerParty(
+            restaurant,
+            dinnerPartyId
+          );
           await postNewRestaurant(createdRestaurant, dinnerPartyId);
         });
 

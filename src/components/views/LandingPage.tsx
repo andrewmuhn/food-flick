@@ -30,7 +30,7 @@ const LandingPage: React.FC = () => {
   };
 
   return (
-    <div className="relative">
+    <div className="bg-beige min-h-screen">
       {/* Hero Image */}
       <div className="relative">
         {/* Hero Image */}
