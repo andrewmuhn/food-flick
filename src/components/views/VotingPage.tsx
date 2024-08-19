@@ -7,8 +7,8 @@ const VotingPage: React.FC = () => {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
 
   useEffect(() => {
-    const pathParemeter = Number (window.location.pathname.split('/')[2]);
-    fetchDinnerParty(pathParemeter)
+    const pathParameter = Number (window.location.pathname.split('/')[2]);
+    fetchDinnerParty(pathParameter)
     
   }, []);
 
