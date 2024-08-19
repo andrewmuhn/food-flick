@@ -13,7 +13,6 @@ const PartyDropdowns: React.FC<PartyDropdownsProps> = ({
   setSelectedDinnerParty,
   selectedHostedParty,
   setSelectedHostedParty,
-  handleCreateParty,
 }) => {
   return (
     <div>
@@ -51,12 +50,6 @@ const PartyDropdowns: React.FC<PartyDropdownsProps> = ({
           {/* Add options dynamically or statically */}
         </select>
       </div>
-      <button
-        onClick={handleCreateParty}
-        className="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green hover:bg-green-dark focus:bg-green-dark focus:outline-none"
-      >
-        Create party
-      </button>
     </div>
   );
 };
