@@ -5,8 +5,9 @@ interface VotingButtonsProps {
 const VotingButtons: React.FC<VotingButtonsProps> = ({ restaurantId }) => {
   console.log(restaurantId);
   return (
-    <div>
-      <label className="inline-block text-orange cursor-pointer translate-x-5 bg-white rounded-full shadow-md active:translate-y-0.5 hover:bg-gray-200">
+    <div className="flex flex-row justify-center">
+      <div>
+      <label className="text-orange cursor-pointer translate-x-5 bg-white rounded-full shadow-md active:translate-y-0.5 hover:bg-gray-200">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-10 w-10"
@@ -22,8 +23,10 @@ const VotingButtons: React.FC<VotingButtonsProps> = ({ restaurantId }) => {
           />
         </svg>
       </label>
+      </div>
 
-      <label className="inline-block text-green cursor-pointer translate-x-5 bg-white rounded-full shadow-md active:translate-y-0.5 hover:bg-gray-200">
+      <div>
+      <label className="text-green cursor-pointer translate-x-5 bg-white rounded-full shadow-md active:translate-y-0.5 hover:bg-gray-200">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-10 w-10"
@@ -39,6 +42,7 @@ const VotingButtons: React.FC<VotingButtonsProps> = ({ restaurantId }) => {
           />
         </svg>
       </label>
+      </div>
     </div>
   );
 };
