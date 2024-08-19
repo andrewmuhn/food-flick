@@ -34,10 +34,7 @@ const LandingPage: React.FC = () => {
 
   useEffect(() => {
     const fetchDinnerParties = async () => {
-      const startTime = performance.now();
       const response = await getAllDinnerParties();
-      const endTime = performance.now();
-      console.log(`API call took ${endTime - startTime} milliseconds`);
       setDinnerParties(response);
     };
     fetchDinnerParties();
