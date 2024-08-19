@@ -1,28 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { getYelpInfo } from "../../services/YelpService";
 import CarouselCard from "../CarouselCard";
 import { Restaurant } from "../../models/Restaurant";
 import { getDinnerPartyById } from "../../services/DinnerPartyService";
 
 const VotingPage: React.FC = () => {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
-  // useEffect(() => {
-  //   const fetchRestaurants = async () => {
-  //     try {
-  //       const restaurantResults = await getYelpInfo();
-  //       console.log("Api data: ", restaurantResults);
-  //       setRestaurants(restaurantResults);
-  //     } catch (error) {
-  //       console.error("Failed to fetch list of restaurants", error);
-  //     }
-  //   };
-  //   fetchRestaurants();
-  // }, []);
 
   useEffect(() => {
-    const pathParemeter = Number (window.location.pathname.split('/')[2]);
-    fetchDinnerParty(pathParemeter)
-    
+    const pathParameter = Number (window.location.pathname.split('/')[2]);
+    fetchDinnerParty(pathParameter)
     
   }, []);
 

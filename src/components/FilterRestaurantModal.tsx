@@ -2,10 +2,8 @@ import React, { useState, useCallback, useEffect } from "react";
 import geoapifyApiInstance from "../utils/GeoapifyApiInstance";
 import debounce from "lodash.debounce";
 import { getYelpInfo } from "../services/YelpService";
-import { RestaurantInfo } from "../models/RestaurantInfo";
 import { createRestaurantForDinnerParty } from "../utils/DinnerPartyApiMappers";
 import { postNewRestaurant } from "../services/RestaurantService";
-import { Restaurant } from "../models/Restaurant";
 
 interface FilterRestaurantModalProps {
   isOpen: boolean;
@@ -68,15 +66,6 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
     setSelectedSuggestion(suggestion);
     setSuggestions([]);
   };
-
-  // const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { name, checked } = e.target;
-  //   if (name === "vegetarian") {
-  //     setIsVegetarian(checked);
-  //   } else if (name === "vegan") {
-  //     setIsVegan(checked);
-  //   }
-  // };
 
   const handleRestaurantSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
