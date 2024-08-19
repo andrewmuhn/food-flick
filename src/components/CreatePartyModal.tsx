@@ -31,8 +31,9 @@ const CreatePartyModal: React.FC<CreatePartyModalProps> = ({ isOpen, onClose, ha
                 <h2 className="text-xl font-bold mb-4">Party Details</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700">Name</label>
+                        <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
                         <input
+                            id="name"
                             type="text"
                             className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                             value={name}
@@ -41,8 +42,9 @@ const CreatePartyModal: React.FC<CreatePartyModalProps> = ({ isOpen, onClose, ha
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700">Date</label>
+                        <label htmlFor="date" className="block text-sm font-medium text-gray-700">Date</label>
                         <input
+                            id="date"
                             type="date"
                             className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                             value={date}
@@ -51,8 +53,9 @@ const CreatePartyModal: React.FC<CreatePartyModalProps> = ({ isOpen, onClose, ha
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700">Time</label>
+                        <label htmlFor="time" className="block text-sm font-medium text-gray-700">Time</label>
                         <input
+                            id="time"
                             type="time"
                             className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                             value={time}
@@ -61,8 +64,9 @@ const CreatePartyModal: React.FC<CreatePartyModalProps> = ({ isOpen, onClose, ha
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700">Voting Strategy</label>
+                        <label htmlFor="strategy" className="block text-sm font-medium text-gray-700">Voting Strategy</label>
                         <select
+                            id="strategy"
                             className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                             value={strategy}
                             onChange={(e) => setStrategy(e.target.value)}
@@ -85,4 +89,3 @@ const CreatePartyModal: React.FC<CreatePartyModalProps> = ({ isOpen, onClose, ha
 };
 
 export default CreatePartyModal;
-

@@ -1,17 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CreatePartyModal from "../CreatePartyModal"; // Adjust path as needed
 import FilterRestaurantModal from "../FilterRestaurantModal"; // Adjust path as needed
-import PartyDropdowns from "../PartyDropdowns"; // Adjust path as needed
 import { DinnerParty } from "../../models/DinnerParty";
+import Dropdown from "../Dropdown";
+import { getAllDinnerParties } from "../../services/DinnerPartyService";
 
 const LandingPage: React.FC = () => {
-  const [selectedDinnerParty, setSelectedDinnerParty] = useState<string>("");
-  const [selectedHostedParty, setSelectedHostedParty] = useState<string>("");
   const [isPartyModalOpen, setIsPartyModalOpen] = useState<boolean>(false);
   const [isRestaurantModalOpen, setIsRestaurantModalOpen] =
     useState<boolean>(false);
 
   const [dinnerPartyId, setDinnerPartyId] = useState<number>(1);
+  const [dinnerParties, setDinnerParties] = useState<DinnerParty[]>([]);
+  const [hostedDinnerParties, setHostedDinnerParties] = useState<DinnerParty[]>(
+    []
+  );
 
   const handleCreateParty = () => {
     setIsPartyModalOpen(true);
@@ -26,8 +29,16 @@ const LandingPage: React.FC = () => {
 
   const handleRedirect = (dinnerPartyId: number) => {
     // Redirect or proceed to /vote
-    window.location.href = `/vote/${dinnerPartyId}`; // Adjust this line based on your routing setup
+    window.location.href = `/vote/${dinnerPartyId}`;
   };
+
+  useEffect(() => {
+    const fetchDinnerParties = async () => {
+      const response = await getAllDinnerParties();
+      setDinnerParties(response);
+    };
+    fetchDinnerParties();
+  }, []);
 
   return (
     <div className="bg-beige min-h-screen">
@@ -35,12 +46,13 @@ const LandingPage: React.FC = () => {
       <div className="relative">
         {/* Hero Image */}
         <div className="relative h-64 bg-gray-800">
-          <img 
-            src="src/assets/foodflick.jpg" 
-            alt="Hero" 
+          <img
+            src="src/assets/foodflick.jpg"
+            alt="Hero"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black opacity-50"></div> {/* Overlay */}
+          <div className="absolute inset-0 bg-black opacity-50"></div>{" "}
+          {/* Overlay */}
           <div className="absolute inset-0 flex items-center justify-center">
             <h1 className="text-7xl font-bold text-white text-center">
               Welcome to FoodFlick!
@@ -54,13 +66,25 @@ const LandingPage: React.FC = () => {
           isPartyModalOpen || isRestaurantModalOpen ? "blur" : ""
         }`}
       >
-        <PartyDropdowns
+        {/* <PartyDropdowns
           selectedDinnerParty={selectedDinnerParty}
           setSelectedDinnerParty={setSelectedDinnerParty}
           selectedHostedParty={selectedHostedParty}
           setSelectedHostedParty={setSelectedHostedParty}
           handleCreateParty={handleCreateParty}
+        /> */}
+
+        <Dropdown
+          dinnerParties={dinnerParties}
+          handleRedirect={handleRedirect}
         />
+
+        <button
+          onClick={handleCreateParty}
+          className="w-60 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green hover:bg-green-dark focus:bg-green-dark focus:outline-none"
+        >
+          Create party
+        </button>
       </div>
 
       <CreatePartyModal
