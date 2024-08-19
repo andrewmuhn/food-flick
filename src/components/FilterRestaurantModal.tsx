@@ -67,15 +67,6 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
     setSuggestions([]);
   };
 
-  // const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { name, checked } = e.target;
-  //   if (name === "vegetarian") {
-  //     setIsVegetarian(checked);
-  //   } else if (name === "vegan") {
-  //     setIsVegan(checked);
-  //   }
-  // };
-
   const handleRestaurantSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
