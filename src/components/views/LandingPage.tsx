@@ -4,6 +4,7 @@ import FilterRestaurantModal from "../FilterRestaurantModal"; // Adjust path as 
 import { DinnerParty } from "../../models/DinnerParty";
 import Dropdown from "../Dropdown";
 import { getAllDinnerParties } from "../../services/DinnerPartyService";
+import LoadingState from "../LoadingState";
 
 const LandingPage: React.FC = () => {
   const [isPartyModalOpen, setIsPartyModalOpen] = useState<boolean>(false);
@@ -15,6 +16,8 @@ const LandingPage: React.FC = () => {
   const [hostedDinnerParties, setHostedDinnerParties] = useState<DinnerParty[]>(
     []
   );
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const handleCreateParty = () => {
     setIsPartyModalOpen(true);
@@ -34,11 +37,21 @@ const LandingPage: React.FC = () => {
 
   useEffect(() => {
     const fetchDinnerParties = async () => {
-      const response = await getAllDinnerParties();
-      setDinnerParties(response);
+      try {
+        const response = await getAllDinnerParties();
+        setDinnerParties(response);
+        setLoading(false);
+      } catch (err) {
+        setError("Failed to fetch dinner parties");
+        setLoading(false);
+      }
     };
     fetchDinnerParties();
   }, []);
+
+  if (error) {
+    return <div className="bg-beige min-h-screen">{error}</div>;
+  }
 
   return (
     <div className="bg-beige min-h-screen">
@@ -61,28 +74,34 @@ const LandingPage: React.FC = () => {
         </div>
       </div>
 
+    {loading ? 
+(<div className="bg-beige min-h-screen">
+<LoadingState loadingMessage={"Finding dinner parties..."} />
+</div>) :
+    (
+        <>
       <div
         className={`p-6 max-w-md mx-auto bg-white rounded-xl shadow-md space-y-4 mt-8 ${
-          isPartyModalOpen || isRestaurantModalOpen ? "blur" : ""
+            isPartyModalOpen || isRestaurantModalOpen ? "blur" : ""
         }`}
-      >
+        >
         {/* <PartyDropdowns
           selectedDinnerParty={selectedDinnerParty}
           setSelectedDinnerParty={setSelectedDinnerParty}
           selectedHostedParty={selectedHostedParty}
           setSelectedHostedParty={setSelectedHostedParty}
           handleCreateParty={handleCreateParty}
-        /> */}
+          /> */}
 
         <Dropdown
           dinnerParties={dinnerParties}
           handleRedirect={handleRedirect}
-        />
+          />
 
         <button
           onClick={handleCreateParty}
           className="w-60 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green hover:bg-green-dark focus:bg-green-dark focus:outline-none"
-        >
+          >
           Create party
         </button>
       </div>
@@ -91,13 +110,15 @@ const LandingPage: React.FC = () => {
         isOpen={isPartyModalOpen}
         onClose={() => setIsPartyModalOpen(false)}
         handlePartyModalSubmit={handlePartyModalSubmit}
-      />
+        />
 
       <FilterRestaurantModal
         isOpen={isRestaurantModalOpen}
         handleRedirect={handleRedirect}
         dinnerPartyId={dinnerPartyId}
-      />
+        />
+    </>
+    )}
     </div>
   );
 };
