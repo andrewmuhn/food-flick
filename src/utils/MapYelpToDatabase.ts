@@ -44,7 +44,7 @@ export function mapYelpDataToRestaurantInfo(
       price: element.price,
       review_count: element.review_count,
       distance: element.distance,
-      business_hours: element.business_hours && element.business_hours[0]?.open,
+      business_hours: element.business_hours && element.business_hours?.open,
       transactions: element.transactions,
       stars_url: createYelpStarsUrl(element.rating),
     });
