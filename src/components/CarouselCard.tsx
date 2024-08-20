@@ -94,7 +94,9 @@ const CarouselCard: React.FC<CarouselCardProps> = ({
           </label>
         </div>
         <div className="flex justify-center w-full p-5">
-          <VotingButtons restaurantId={restaurant.restaurant_id} />
+          <VotingButtons
+            restaurantId={restaurant.restaurant_id}
+          />
         </div>
       </div>
     </div>

@@ -1,35 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { useAuthenticator } from "@aws-amplify/ui-react";
+import React from "react";
 import CarouselCard from "../CarouselCard";
-import { Restaurant } from "../../models/Restaurant";
-import { getDinnerPartyById } from "../../services/DinnerPartyService";
 import LoadingState from "../LoadingState";
+import { useDinnerPartyContext } from "../Context/DinnerPartyContext";
+import { useAuthenticator } from "@aws-amplify/ui-react";
 import LockVotesButton from "../LockVotesButton";
 
 const VotingPage: React.FC = () => {
-  const [dinnerParty, setDinnerParty] = useState<any>(null);
-  const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const { user } = useAuthenticator();
+  const { restaurants, dinnerParty, loading, error } =
+    useDinnerPartyContext();
 
-  useEffect(() => {
-    const pathParameter = Number(window.location.pathname.split("/")[2]);
-
-    const fetchDinnerParty = async (dinnerPartyId: number) => {
-      try {
-        const dinnerParty = await getDinnerPartyById(dinnerPartyId);
-        setDinnerParty(dinnerParty);
-        setRestaurants(dinnerParty.restaurants);
-        setLoading(false);
-      } catch {
-        setError("Failed to fetch dinner party info");
-        setLoading(false);
-      }
-    };
-
-    fetchDinnerParty(pathParameter);
-  }, []);
+    const { user } = useAuthenticator();
 
   if (loading) {
     return (
@@ -50,7 +30,7 @@ const VotingPage: React.FC = () => {
   if (!dinnerParty) return null;
 
   const isAdmin = user.username === dinnerParty.createdBy;
-  const isVotingLocked = dinnerParty.voting_locked;
+  const isVotingLocked = dinnerParty.finalized;
 
   return (
     <div className="bg-beige min-h-screen flex flex-col">
