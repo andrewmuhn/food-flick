@@ -18,6 +18,7 @@ const VotingPage: React.FC = () => {
         const dinnerParty = await getDinnerPartyById(dinnerPartyId);
         console.log(dinnerParty.restaurants);
         setRestaurants(dinnerParty.restaurants);
+        
         setLoading(false);
       } catch (err) {
         setError("Failed to fetch dinner party info");

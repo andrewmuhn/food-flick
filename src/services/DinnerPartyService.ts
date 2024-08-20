@@ -6,7 +6,7 @@ export const postNewDinnerParty = async (dinnerParty: DinnerParty) => {
         const response = await dinnerPartyApiInstance.post<DinnerParty>('/dinner-party', dinnerParty);
         return response.data;
     } catch (error) {
-        console.error('Failed to post new dinner party:', error);
+        console.error('Failed to post new dinner party:\n', error);
         throw error;
     }
 }
@@ -16,7 +16,7 @@ export const getAllDinnerParties = async (): Promise<DinnerParty[]> => {
         const response = await dinnerPartyApiInstance.get<DinnerParty[]>('/dinner-party');
         return response.data;
     } catch (error) {
-        console.error('Failed to fetch dinner parties:', error);
+        console.error('Failed to fetch dinner parties:\n', error);
         throw error
     }
 }
@@ -26,9 +26,17 @@ export const getDinnerPartyById = async (dinnerPartyId:number): Promise<DinnerPa
         const response = await dinnerPartyApiInstance.get<DinnerParty>(`/dinner-party/${dinnerPartyId}`);
         return response.data;
     } catch (error) {
-        
-        console.error('Failed to fetch dinner parties:', error);
+        console.error('Failed to fetch dinner parties:\n', error);
         throw error
     }
-    
+}
+
+export const updateDinnerPartyById = async (dinnerPartyId:number): Promise<DinnerParty> => {
+    try {
+        const response = await dinnerPartyApiInstance.put<DinnerParty>(`/dinner-party/${dinnerPartyId}`);
+        return response.data
+    } catch (error) {
+        console.error('Failed to update dinner party:\n', error);
+        
+    }
 }
