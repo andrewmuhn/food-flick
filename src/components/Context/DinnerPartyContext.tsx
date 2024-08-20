@@ -32,14 +32,11 @@ export const DinnerPartyProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const dinnerPartyId = Number(window.location.pathname.split("/")[2]);
-
-    console.log(dinnerPartyId);
     if (!dinnerPartyId) return;
 
     const fetchDinnerParty = async (id: number) => {
       try {
         const response = await getDinnerPartyById(id);
-        console.log(response);
         setDinnerParty(response);
         filterRestaurantsToRender(response);
         setLoading(false);
@@ -55,19 +52,15 @@ export const DinnerPartyProvider = ({ children }: { children: ReactNode }) => {
   const { user } = useAuthenticator((context) => [context.user]);
 
   const filterRestaurantsToRender = (dinnerParty: DinnerParty) => {
-    const restaurantsToRender: Restaurant[] = dinnerParty.restaurants;
-    console.log("here");
-    restaurantsToRender.forEach((restaurant, index) => {
-      restaurant.votes.forEach((vote) => {
-        if (vote.createdBy === user.userId) {
-          console.log("inside if", restaurant);
-          restaurantsToRender.splice(index, 1);
-        }
-        // restaurantsToRender.push(restaurant);
-      });
-    });
-    console.log(restaurantsToRender);
-    setRestaurants(restaurantsToRender);
+    const allRestaurantsInDinnerParty: Restaurant[] = dinnerParty.restaurants;
+
+    const filteredRestaurants = allRestaurantsInDinnerParty.filter(
+      (restaurant) => {
+        return !restaurant.votes.some((vote) => vote.createdBy === user.userId);
+      }
+    );
+
+    setRestaurants(filteredRestaurants);
   };
 
   const removeRestaurantToRender = (restaurantId: number) => {
@@ -83,7 +76,6 @@ export const DinnerPartyProvider = ({ children }: { children: ReactNode }) => {
       value={{
         dinnerParty,
         restaurants,
-        setRestaurants,
         loading,
         error,
         removeRestaurantToRender,

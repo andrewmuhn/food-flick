@@ -4,12 +4,10 @@ import { useDinnerPartyContext } from "./Context/DinnerPartyContext";
 
 interface VotingButtonsProps {
   restaurantId: number;
-  // removeRestaurantToRender: (number: number) => void;
 }
 
 const VotingButtons: React.FC<VotingButtonsProps> = ({
   restaurantId,
-  // removeRestaurantToRender,
 }) => {
   const { removeRestaurantToRender } = useDinnerPartyContext();
 

@@ -2,19 +2,10 @@ import React from "react";
 import CarouselCard from "../CarouselCard";
 import LoadingState from "../LoadingState";
 import { useDinnerPartyContext } from "../Context/DinnerPartyContext";
-import { Restaurant } from "../../models/Restaurant";
 
 const VotingPage: React.FC = () => {
-  const { restaurants, setRestaurants, loading, error } =
+  const { restaurants, loading, error } =
     useDinnerPartyContext();
-
-  // const removeRestaurantToRender = (restaurantId: number) => {
-  //   setRestaurants((prevRestaurants: Restaurant[]) =>
-  //     prevRestaurants.filter(
-  //       (restaurant) => restaurant.restaurant_id !== restaurantId
-  //     )
-  //   );
-  // };
 
   if (loading) {
     return (
@@ -37,7 +28,6 @@ const VotingPage: React.FC = () => {
             restaurant={restaurant}
             cardIndex={index}
             restaurantArrayLength={restaurants.length}
-            // removeRestaurantToRender={removeRestaurantToRender}
           />
         ))
       ) : (
