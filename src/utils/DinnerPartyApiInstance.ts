@@ -1,8 +1,13 @@
 import { fetchAuthSession } from 'aws-amplify/auth';
 import axios from 'axios';
+const environment = import.meta.env.VITE_ENVIRONMENT;
+
+const baseURL = environment === 'development'
+    ? 'http://localhost:8080/api'
+    : 'http://food-flick-env.eba-cmk3wbx6.us-east-2.elasticbeanstalk.com/api';
 
 const dinnerPartyApiInstance = axios.create({
-    baseURL: 'http://localhost:8080/api'
+    baseURL
 });
 
 dinnerPartyApiInstance.interceptors.request.use(async (config) => {
