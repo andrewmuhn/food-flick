@@ -49,7 +49,7 @@ const VotingPage: React.FC = () => {
             key={restaurant.restaurant_id}
             restaurant={restaurant}
             cardIndex={index}
-            resturantArrayLength={restaurants.length}
+            restaurantArrayLength={restaurants.length}
           />
         ))
       ) : (

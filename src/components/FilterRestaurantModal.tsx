@@ -20,7 +20,7 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [selectedSuggestion, setSelectedSuggestion] = useState<string>("");
   const [radiusInput, setRadiusInput] = useState("");
-  const [priceInput, setPriceInput] = useState("");
+  const [priceInput, setPriceInput] = useState("3");
   const [isVegetarian, setIsVegetarian] = useState<boolean>(false);
   const [isVegan, setIsVegan] = useState<boolean>(false);
   const [isValidYelpCall, setIsValidYelpCall] = useState<boolean>(true);
@@ -153,8 +153,8 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
             <input
               type="number"
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-              placeholder="MAX 25"
-              max="25"
+              placeholder="MAX 24"
+              max="24"
               id="miles"
               value={radiusInput}
               onChange={(e) => setRadiusInput(e.target.value)}
