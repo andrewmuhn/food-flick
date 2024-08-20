@@ -1,46 +1,60 @@
 import React, { useEffect, useState } from "react";
-import { getYelpInfo } from "../../services/YelpService";
 import CarouselCard from "../CarouselCard";
-import { RestaurantInfo } from "../../models/Restaurant";
-import VotingButtons from "../VotingButtons";
-import LockVotesButton from "../LockVotesButton";
+import { Restaurant } from "../../models/Restaurant";
+import { getDinnerPartyById } from "../../services/DinnerPartyService";
+import LoadingState from "../LoadingState";
 
 const VotingPage: React.FC = () => {
-  const [restaurants, setRestaurants] = useState<RestaurantInfo[]>([]);
-
-  // useEffect(() => {
-  //   const fetchRestaurants = async () => {
-  //     try {
-  //       const restaurantResults = await getYelpInfo();
-  //       console.log("Api data: ", restaurantResults);
-  //       setRestaurants(restaurantResults);
-  //     } catch (error) {
-  //       console.error("Failed to fetch list of restaurants", error);
-  //     }
-  //   };
-  //   fetchRestaurants();
-  // }, []);
+  const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log("Restaurants state: ", restaurants);
-  }, [restaurants]);
+    const pathParameter = Number(window.location.pathname.split("/")[2]);
+
+    const fetchDinnerParty = async (dinnerPartyId: number) => {
+      // Now you can use the 'path' variable to access the path parameter
+      try {
+        const dinnerParty = await getDinnerPartyById(dinnerPartyId);
+        console.log(dinnerParty.restaurants);
+        setRestaurants(dinnerParty.restaurants);
+        
+        setLoading(false);
+      } catch (err) {
+        setError("Failed to fetch dinner party info");
+        setLoading(false);
+      }
+    };
+
+    fetchDinnerParty(pathParameter);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="bg-beige min-h-screen">
+        <LoadingState loadingMessage={"Prepping your restaurants..."} />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div className="bg-beige min-h-screen">{error}</div>;
+  }
 
   return (
-    <div>
+    <div className="bg-beige min-h-screen">
       {restaurants.length > 0 ? (
         restaurants.map((restaurant, index) => (
           <CarouselCard
-            key={restaurant.yelp_id}
+            key={restaurant.restaurant_id}
             restaurant={restaurant}
             cardIndex={index}
-            resturantArrayLength={restaurants.length}
+            restaurantArrayLength={restaurants.length}
           />
         ))
       ) : (
         <p>No restaurants available</p>
       )}
-      <VotingButtons restaurantId={1} />
-      <LockVotesButton dinnerPartyId={2} />
     </div>
   );
 };
