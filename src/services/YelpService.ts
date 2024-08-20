@@ -18,9 +18,11 @@ export const getYelpInfo = async (
   };
 
   try {
-    const response = await yelpApiInstance.get<YelpData[]>("", {
+    const response = await yelpApiInstance.get<any>("", {
       params,
     });
+    console.log(response.data);
+    
     const resp = mapYelpDataToRestaurantInfo(response.data.businesses);
     return resp;
   } catch (error) {
