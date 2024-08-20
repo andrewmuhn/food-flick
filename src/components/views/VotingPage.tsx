@@ -6,10 +6,9 @@ import { useAuthenticator } from "@aws-amplify/ui-react";
 import LockVotesButton from "../LockVotesButton";
 
 const VotingPage: React.FC = () => {
-  const { restaurants, dinnerParty, loading, error } =
-    useDinnerPartyContext();
-
-    const { user } = useAuthenticator();
+  const { restaurants, dinnerParty, loading, error } = 
+  useDinnerPartyContext();
+  const { user } = useAuthenticator();
 
   if (loading) {
     return (
@@ -34,6 +33,7 @@ const VotingPage: React.FC = () => {
 
   return (
     <div className="bg-beige min-h-screen flex flex-col">
+      <h1 className="text-4xl font-bold mt-6 mb-4 text-green">{dinnerParty.party_name}</h1>
       <div className="flex-1 p-4">
         {restaurants.length > 0 ? (
           restaurants.map((restaurant, index) => (
@@ -45,10 +45,38 @@ const VotingPage: React.FC = () => {
             />
           ))
         ) : (
-          <p>No restaurants available</p>
+          <>
+            {isAdmin && !isVotingLocked ? (
+              <>
+                <h2 className="text-3xl font-bold mt-12 mb-4 text-green">
+                  The polls are still open. Hit the lock button to count the votes!
+                </h2>
+                <div className="flex justify-center items-center mt-4">
+                  <img 
+                    src="/lockstress.jpg" 
+                    alt="Lock 'Em" 
+                    className="w-80 h-auto mt-6"
+                  />
+                </div>
+              </>
+            ) : (
+              <>
+                <h2 className="text-3xl font-bold mt-12 mb-4 text-green">
+                  Votes are still being counted, check back to see the results!
+                </h2>
+                <div className="flex justify-center items-center mt-4">
+                  <img 
+                    src="/sad-pablo-lonely.gif" 
+                    alt="Count the votes" 
+                    className="w-120 h-auto mt-6"
+                  />
+                </div>
+              </>
+            )}
+          </>
         )}
       </div>
-      <div className="p-4 mb-40">
+      <div className="p-4 mb-32">
         {isAdmin && !isVotingLocked && (
           <LockVotesButton dinnerPartyId={dinnerParty.dinner_party_id} />
         )}
