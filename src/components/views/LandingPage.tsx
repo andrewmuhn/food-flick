@@ -63,7 +63,7 @@ const LandingPage: React.FC = () => {
           {/* Hero Image */}
           <div className="relative h-64 bg-gray-800">
             <img
-              src="src/assets/foodflick.jpg"
+              src="/assets/foodflick.jpg"
               alt="Hero"
               className="w-full h-full object-cover"
             />
