@@ -12,7 +12,7 @@ import { DinnerParty } from "../../models/DinnerParty";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 
 interface DinnerPartyContextProps {
-  dinnerParty: DinnerParty;
+  dinnerParty: DinnerParty | undefined;
   restaurants: Restaurant[];
   loading: boolean;
   error: string | null;

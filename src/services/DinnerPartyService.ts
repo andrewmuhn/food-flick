@@ -31,10 +31,9 @@ export const getDinnerPartyById = async (dinnerPartyId:number): Promise<DinnerPa
     }
 }
 
-export const updateDinnerPartyById = async (dinnerPartyId:number): Promise<DinnerParty> => {
+export const updateDinnerPartyById = async (dinnerPartyId:number): Promise<void> => {
     try {
-        const response = await dinnerPartyApiInstance.put<DinnerParty>(`/dinner-party/${dinnerPartyId}`);
-        return response.data
+        await dinnerPartyApiInstance.put<DinnerParty>(`/dinner-party/${dinnerPartyId}`);
     } catch (error) {
         console.error('Failed to update dinner party:\n', error);
         
