@@ -4,6 +4,7 @@ import LandingPage from "./components/views/LandingPage";
 import { Authenticator } from "@aws-amplify/ui-react";
 import VotingPage from "./components/views/VotingPage";
 import NavBar from "./components/Navbar";
+import { DinnerPartyProvider } from "./components/Context/DinnerPartyContext";
 
 function App() {
   return (
@@ -11,10 +12,12 @@ function App() {
       <Authenticator>
         <NavBar />
         <Router>
-          <Routes>
-            <Route path="/" Component={LandingPage} />
-            <Route path="/vote/:dinnerPartyId" Component={VotingPage} />
-          </Routes>
+          <DinnerPartyProvider>
+            <Routes>
+              <Route path="/" Component={LandingPage} />
+              <Route path="/vote/:dinnerPartyId" Component={VotingPage} />
+            </Routes>
+          </DinnerPartyProvider>
         </Router>
       </Authenticator>
     </>

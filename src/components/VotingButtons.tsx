@@ -1,21 +1,27 @@
 import { postNewVote } from "../services/VoteService";
 import { createVoteForRestaurant } from "../utils/DinnerPartyApiMappers";
+import { useDinnerPartyContext } from "./Context/DinnerPartyContext";
 
 interface VotingButtonsProps {
   restaurantId: number;
 }
 
-const handleVoteFalse = async (restaurantId: number) => {
-  const createdVote = createVoteForRestaurant(restaurantId, false);
-  await postNewVote(createdVote, restaurantId);
-};
+const VotingButtons: React.FC<VotingButtonsProps> = ({
+  restaurantId,
+}) => {
+  const { removeRestaurantToRender } = useDinnerPartyContext();
 
-const handleVoteTrue = async (restaurantId: number) => {
-  const createdVote = createVoteForRestaurant(restaurantId, true);
-  await postNewVote(createdVote, restaurantId);
-};
+  const handleVoteFalse = async (restaurantId: number) => {
+    const createdVote = createVoteForRestaurant(restaurantId, false);
+    await postNewVote(createdVote, restaurantId);
+    removeRestaurantToRender(restaurantId);
+  };
 
-const VotingButtons: React.FC<VotingButtonsProps> = ({ restaurantId }) => {
+  const handleVoteTrue = async (restaurantId: number) => {
+    const createdVote = createVoteForRestaurant(restaurantId, true);
+    await postNewVote(createdVote, restaurantId);
+    removeRestaurantToRender(restaurantId);
+  };
   return (
     <div className="flex flex-row justify-center space-x-4">
       <div
