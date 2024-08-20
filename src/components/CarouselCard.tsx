@@ -6,12 +6,14 @@ interface CarouselCardProps {
   restaurant: Restaurant;
   cardIndex: number;
   restaurantArrayLength: number;
+  removeRestaurantToRender: (number: number) => void;
 }
 
 const CarouselCard: React.FC<CarouselCardProps> = ({
   restaurant,
   cardIndex,
   restaurantArrayLength,
+  // removeRestaurantToRender,
 }) => {
   const nextCard =
     cardIndex === restaurantArrayLength - 1 ? "0" : (cardIndex + 1).toString();
@@ -94,7 +96,10 @@ const CarouselCard: React.FC<CarouselCardProps> = ({
           </label>
         </div>
         <div className="flex justify-center w-full p-5">
-          <VotingButtons restaurantId={restaurant.restaurant_id} />
+          <VotingButtons
+            restaurantId={restaurant.restaurant_id}
+            //  removeRestaurantToRender={removeRestaurantToRender}
+          />
         </div>
       </div>
     </div>

@@ -1,36 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import CarouselCard from "../CarouselCard";
-import { Restaurant } from "../../models/Restaurant";
-import { getDinnerPartyById } from "../../services/DinnerPartyService";
 import LoadingState from "../LoadingState";
 import { useDinnerPartyContext } from "../Context/DinnerPartyContext";
+import { Restaurant } from "../../models/Restaurant";
 
 const VotingPage: React.FC = () => {
-  // const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState<string | null>(null);
+  const { restaurants, setRestaurants, loading, error } =
+    useDinnerPartyContext();
 
-  // useEffect(() => {
-  //   const pathParameter = Number(window.location.pathname.split("/")[2]);
-
-  //   const fetchDinnerParty = async (dinnerPartyId: number) => {
-  //     // Now you can use the 'path' variable to access the path parameter
-  //     try {
-  //       const dinnerParty = await getDinnerPartyById(dinnerPartyId);
-  //       console.log(dinnerParty.restaurants);
-  //       setRestaurants(dinnerParty.restaurants);
-
-  //       setLoading(false);
-  //     } catch (err) {
-  //       setError("Failed to fetch dinner party info");
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchDinnerParty(pathParameter);
-  // }, []);
-
-  const { restaurants, loading, error } = useDinnerPartyContext();
+  // const removeRestaurantToRender = (restaurantId: number) => {
+  //   setRestaurants((prevRestaurants: Restaurant[]) =>
+  //     prevRestaurants.filter(
+  //       (restaurant) => restaurant.restaurant_id !== restaurantId
+  //     )
+  //   );
+  // };
 
   if (loading) {
     return (
@@ -53,6 +37,7 @@ const VotingPage: React.FC = () => {
             restaurant={restaurant}
             cardIndex={index}
             restaurantArrayLength={restaurants.length}
+            // removeRestaurantToRender={removeRestaurantToRender}
           />
         ))
       ) : (

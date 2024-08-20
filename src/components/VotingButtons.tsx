@@ -4,11 +4,13 @@ import { useDinnerPartyContext } from "./Context/DinnerPartyContext";
 
 interface VotingButtonsProps {
   restaurantId: number;
+  // removeRestaurantToRender: (number: number) => void;
 }
 
-
-const VotingButtons: React.FC<VotingButtonsProps> = ({ restaurantId }) => {
-  
+const VotingButtons: React.FC<VotingButtonsProps> = ({
+  restaurantId,
+  // removeRestaurantToRender,
+}) => {
   const { removeRestaurantToRender } = useDinnerPartyContext();
 
   const handleVoteFalse = async (restaurantId: number) => {
@@ -16,7 +18,7 @@ const VotingButtons: React.FC<VotingButtonsProps> = ({ restaurantId }) => {
     await postNewVote(createdVote, restaurantId);
     removeRestaurantToRender(restaurantId);
   };
-  
+
   const handleVoteTrue = async (restaurantId: number) => {
     const createdVote = createVoteForRestaurant(restaurantId, true);
     await postNewVote(createdVote, restaurantId);

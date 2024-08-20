@@ -16,6 +16,7 @@ interface DinnerPartyContextProps {
   restaurants: Restaurant[];
   loading: boolean;
   error: string | null;
+  removeRestaurantToRender: (restaurantId: number) => void;
 }
 
 const DinnerPartyContext = createContext<DinnerPartyContextProps | undefined>(
@@ -70,13 +71,11 @@ export const DinnerPartyProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const removeRestaurantToRender = (restaurantId: number) => {
-    const restaurantsRendering: Restaurant[] = restaurants;
-    restaurantsRendering.forEach((restaurant, index) => {
-      if (restaurant.restaurant_id === restaurantId) {
-        restaurantsRendering.splice(index, 1);
-      }
-      setRestaurants(restaurantsRendering);
-    });
+    setRestaurants((prevRestaurants: Restaurant[]) =>
+      prevRestaurants.filter(
+        (restaurant) => restaurant.restaurant_id !== restaurantId
+      )
+    );
   };
 
   return (
@@ -84,6 +83,7 @@ export const DinnerPartyProvider = ({ children }: { children: ReactNode }) => {
       value={{
         dinnerParty,
         restaurants,
+        setRestaurants,
         loading,
         error,
         removeRestaurantToRender,
