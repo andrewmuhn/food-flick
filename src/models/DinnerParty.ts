@@ -8,7 +8,8 @@ export class DinnerParty {
     location: string;
     party_date: string;
     voting_strategy: VotingStrategy;
-    restaurants: Restaurant[]
+    restaurants: Restaurant[];
+    created_by: string;
 
     constructor() {
         this.dinner_party_id = 0;
@@ -18,6 +19,7 @@ export class DinnerParty {
         this.party_date = new Date().toISOString();
         this.voting_strategy = VotingStrategy.DEFAULT;
         this.restaurants = [];
+        this.created_by = '';
     };
 
 }
