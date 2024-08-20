@@ -38,6 +38,7 @@ export const DinnerPartyProvider = ({ children }: { children: ReactNode }) => {
     const fetchDinnerParty = async (id: number) => {
       try {
         const response = await getDinnerPartyById(id);
+        console.log(response);
         setDinnerParty(response);
         filterRestaurantsToRender(response);
         setLoading(false);
@@ -53,17 +54,19 @@ export const DinnerPartyProvider = ({ children }: { children: ReactNode }) => {
   const { user } = useAuthenticator((context) => [context.user]);
 
   const filterRestaurantsToRender = (dinnerParty: DinnerParty) => {
-    const restaurantsToRender: Restaurant[] = [];
-    dinnerParty.restaurants.forEach((restaurant) => {
+    const restaurantsToRender: Restaurant[] = dinnerParty.restaurants;
+    console.log("here");
+    restaurantsToRender.forEach((restaurant, index) => {
       restaurant.votes.forEach((vote) => {
-        if (vote.created_by === user.userId) {
-          return;
+        if (vote.createdBy === user.userId) {
+          console.log("inside if", restaurant);
+          restaurantsToRender.splice(index, 1);
         }
-        restaurantsToRender.push(restaurant);
-        setRestaurants(restaurantsToRender);
+        // restaurantsToRender.push(restaurant);
       });
     });
-    setRestaurants(dinnerParty.restaurants);
+    console.log(restaurantsToRender);
+    setRestaurants(restaurantsToRender);
   };
 
   const removeRestaurantToRender = (restaurantId: number) => {
