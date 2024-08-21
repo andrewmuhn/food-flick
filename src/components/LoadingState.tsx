@@ -8,7 +8,7 @@ const LoadingState: React.FC<LoadingStateProps> = ({ loadingMessage }) => {
   return (
     <div className="loading-container">
       <img
-        src="/src/assets/fork-and-knife.svg"
+        src="https://foodflickimages.s3.us-east-2.amazonaws.com/assets/fork-and-knife.svg"
         alt="Loading"
         className="loading-icon"
       />
