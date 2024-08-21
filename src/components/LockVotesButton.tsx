@@ -1,3 +1,5 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import { lockVotes } from "../services/DinnerPartyService";
 
 interface LockVotesButtonProps {
@@ -5,11 +7,12 @@ interface LockVotesButtonProps {
 }
 
 const LockVotesButton: React.FC<LockVotesButtonProps> = ({ dinnerPartyId }) => {
+  const navigate = useNavigate();
+
   const handleLockVotesSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(dinnerPartyId);
     await lockVotes(dinnerPartyId);
-    //will post to votes here and need to lock button to only submit once
+    navigate(`/dinnerparty/${dinnerPartyId}/results`);
   };
 
   return (

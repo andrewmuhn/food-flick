@@ -31,7 +31,7 @@ const CarouselCard: React.FC<CarouselCardProps> = ({
         readOnly
       />
       {/* <!-- content --> */}
-      <div className="w-96 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-lg transition-all duration-300 opacity-0 peer-checked:opacity-100 peer-checked:z-10 z-0">
+      <div className="w-96 absolute mt-6 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-lg transition-all duration-300 opacity-0 peer-checked:opacity-100 peer-checked:z-10 z-0">
         <a
           href={restaurant.yelpMetaData.url}
           target="_blank"
@@ -76,7 +76,7 @@ const CarouselCard: React.FC<CarouselCardProps> = ({
               : "N/A"}
           </p>
           <div className="flex justify-center">
-            <ul className="flex space-x-2  text-gray-900 font-medium">
+            <ul className="flex space-x-2 text-gray-900 font-medium">
               {restaurant.yelpMetaData.categories.map((category, index) => (
                 <React.Fragment key={index}>
                   <li>{category}</li>
@@ -127,8 +127,8 @@ const CarouselCard: React.FC<CarouselCardProps> = ({
             </label>
           </div>
         )}
-        <div className="flex justify-center w-full pb-4">
-          <VotingButtons restaurantId={restaurant.restaurant_id} />
+        <div className="flex justify-center w-full pb-4 mt-4">
+          {!restaurant.winner && <VotingButtons restaurantId={restaurant.restaurant_id} />}
           <div className="absolute bottom-3 right-3 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg p-2">
             <a
               href={restaurant.yelpMetaData.url}

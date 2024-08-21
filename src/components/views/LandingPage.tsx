@@ -32,7 +32,7 @@ const LandingPage: React.FC = () => {
 
   const handleRedirect = (dinnerPartyId: number) => {
     // Redirect or proceed to /vote
-    window.location.href = `/vote/${dinnerPartyId}`;
+    window.location.href = `/dinnerparty/${dinnerPartyId}`;
   };
 
   useEffect(() => {
