@@ -95,7 +95,9 @@ const CreatePartyModal: React.FC<CreatePartyModalProps> = ({
               required
             />
             {pastDateError ? (
-              <p className="text-orange">Please choose a date in the future.</p>
+              <p className="text-orange">
+                Please choose a current or future date.
+              </p>
             ) : (
               ""
             )}
