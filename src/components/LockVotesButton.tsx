@@ -1,3 +1,5 @@
+import { lockVotes } from "../services/DinnerPartyService";
+
 interface LockVotesButtonProps {
   dinnerPartyId: number;
 }
@@ -6,6 +8,7 @@ const LockVotesButton: React.FC<LockVotesButtonProps> = ({ dinnerPartyId }) => {
   const handleLockVotesSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log(dinnerPartyId);
+    await lockVotes(dinnerPartyId);
     //will post to votes here and need to lock button to only submit once
   };
 
