@@ -62,7 +62,11 @@ const LandingPage: React.FC = () => {
         <div className="relative">
           {/* Hero Image */}
           <div className="relative h-64 bg-gray-800">
-            <img alt="Hero" className="w-full h-full object-cover" />
+            <img
+              src="https://foodflickimages.s3.us-east-2.amazonaws.com/assets/foodflick.jpg"
+              alt="Hero"
+              className="w-full h-full object-cover"
+            />
             <div className="absolute inset-0 bg-black opacity-50"></div>{" "}
             {/* Overlay */}
             <div className="absolute inset-0 flex items-center justify-center">
