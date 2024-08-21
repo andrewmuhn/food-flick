@@ -26,6 +26,8 @@ const VotingPage: React.FC = () => {
     );
   }
 
+  console.log(dinnerParty);
+
   if (!dinnerParty) return null;
 
   console.log(dinnerParty);
