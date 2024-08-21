@@ -1,13 +1,24 @@
+<<<<<<< Updated upstream
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+=======
+import React, { useEffect, useState } from "react";
+>>>>>>> Stashed changes
 import CarouselCard from "../CarouselCard";
 import LoadingState from "../LoadingState";
 import { useDinnerPartyContext } from "../Context/DinnerPartyContext";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import LockVotesButton from "../LockVotesButton";
+import UserAfterVote from "../UserAfterVote";
+import AdminAfterVote from "../AdminAfterVote";
 
 const VotingPage: React.FC = () => {
+<<<<<<< Updated upstream
   const { restaurants, dinnerParty, loading, error } = useDinnerPartyContext();
+=======
+  const { restaurants, dinnerParty, error } = useDinnerPartyContext();
+
+>>>>>>> Stashed changes
   const { user } = useAuthenticator();
   const navigate = useNavigate(); // Added for redirection
 
@@ -16,6 +27,14 @@ const VotingPage: React.FC = () => {
       navigate(`/dinnerparty/${dinnerParty.dinner_party_id}/results`);
     }
   }, [dinnerParty, navigate]);
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (dinnerParty && restaurants.length > 0) {
+      setLoading(false);
+    }
+  }, [dinnerParty, restaurants]);
 
   if (loading) {
     return (
@@ -41,7 +60,13 @@ const VotingPage: React.FC = () => {
 
   return (
     <div className="bg-beige min-h-screen flex flex-col">
+<<<<<<< Updated upstream
       <h1 className="text-4xl font-bold mt-6 text-green">{dinnerParty.party_name}</h1>
+=======
+      <h1 className="text-4xl font-bold mt-6 mb-4 text-green">
+        {dinnerParty.party_name}
+      </h1>
+>>>>>>> Stashed changes
       <div className="flex-1 p-4">
         {restaurants.length > 0 ? (
           restaurants.map((restaurant, index) => (
@@ -55,31 +80,9 @@ const VotingPage: React.FC = () => {
         ) : (
           <>
             {isAdmin && !isVotingLocked ? (
-              <>
-                <h2 className="text-3xl font-bold mt-12 mb-4 text-green">
-                  The polls are still open. Hit the lock button to count the votes!
-                </h2>
-                <div className="flex justify-center items-center mt-4">
-                  <img 
-                    src="/lockstress.jpg" 
-                    alt="Lock 'Em" 
-                    className="w-80 h-auto mt-6"
-                  />
-                </div>
-              </>
+              <AdminAfterVote />
             ) : (
-              <>
-                <h2 className="text-3xl font-bold mt-12 mb-4 text-green">
-                  Votes are still being counted, check back to see the results!
-                </h2>
-                <div className="flex justify-center items-center mt-4">
-                  <img 
-                    src="/sad-pablo-lonely.gif" 
-                    alt="Count the votes" 
-                    className="w-120 h-auto mt-6"
-                  />
-                </div>
-              </>
+              <UserAfterVote />
             )}
           </>
         )}
