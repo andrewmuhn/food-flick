@@ -11,6 +11,7 @@ phases:
   pre_build:
     commands:
       - echo Running pre-build steps...
+      - npm cache clean --force
   build:
     commands:
       - echo Building the Vite React app...
