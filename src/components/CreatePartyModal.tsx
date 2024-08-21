@@ -18,6 +18,18 @@ const CreatePartyModal: React.FC<CreatePartyModalProps> = ({
   const [date, setDate] = useState<string>("");
   const [time, setTime] = useState<string>("");
   const [strategy, setStrategy] = useState<string>("");
+  const [pastDateError, setPastDateError] = useState<boolean>(false);
+
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPastDateError(false);
+    const currentDate = new Date().toISOString().split("T")[0];
+    const inputDate = new Date(e.target.value).toISOString().split("T")[0];
+    if (currentDate <= inputDate) {
+      setDate(e.target.value);
+    } else {
+      setPastDateError(true);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -79,9 +91,14 @@ const CreatePartyModal: React.FC<CreatePartyModalProps> = ({
               type="date"
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
               value={date}
-              onChange={(e) => setDate(e.target.value)}
+              onChange={handleDateChange}
               required
             />
+            {pastDateError ? (
+              <p className="text-orange">Please choose a date in the future.</p>
+            ) : (
+              ""
+            )}
           </div>
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">
