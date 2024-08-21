@@ -14,7 +14,7 @@ function createYelpStarsUrl(rating: number): string {
   } else if (stars % 1 === 0) {
     yelpStarsUrl = `Review_Ribbon_small_16_${Math.trunc(stars)}@1x.png`;
   } else {
-    yelpStarsUrl = `Review_Ribbon_small_16_${Math.trunc(stars)}_half@1x.png`;
+    yelpStarsUrl = `Review_Ribbon_small_16_${Math.trunc(stars)}_half@2x.png`;
   }
 
   return yelpStarsUrl;
