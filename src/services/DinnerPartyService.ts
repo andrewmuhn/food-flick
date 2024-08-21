@@ -52,6 +52,19 @@ export const updateDinnerPartyById = async (
   }
 };
 
+export const updateDinnerPartyLocationById = async (
+    dinnerPartyId: number, dinnerParty:DinnerParty
+  ): Promise<void> => {
+    try {
+      await dinnerPartyApiInstance.put<DinnerParty>(
+        `/dinner-party/${dinnerPartyId}/location`,
+        dinnerParty
+      );
+    } catch (error) {
+      console.error("Failed to update dinner party:\n", error);
+    }
+  };
+
 export const lockVotes = async (dinnerPartyId: number): Promise<void> => {
   try {
     await dinnerPartyApiInstance.put<DinnerParty>(
