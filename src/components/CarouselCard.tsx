@@ -127,15 +127,8 @@ const CarouselCard: React.FC<CarouselCardProps> = ({
             </label>
           </div>
         )}
-<<<<<<< Updated upstream
         <div className="flex justify-center w-full pb-4 mt-4">
           {!restaurant.winner && <VotingButtons restaurantId={restaurant.restaurant_id} />}
-=======
-        <div className="flex justify-center w-full pb-4">
-          <VotingButtons
-            restaurantId={restaurant.restaurant_id}
-          />
->>>>>>> Stashed changes
           <div className="absolute bottom-3 right-3 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg p-2">
             <a
               href={restaurant.yelpMetaData.url}
