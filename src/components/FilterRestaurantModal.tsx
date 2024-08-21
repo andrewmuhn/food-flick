@@ -2,8 +2,9 @@ import React, { useState, useCallback, useEffect } from "react";
 import geoapifyApiInstance from "../utils/GeoapifyApiInstance";
 import debounce from "lodash.debounce";
 import { getYelpInfo } from "../services/YelpService";
-import { createRestaurantForDinnerParty } from "../utils/DinnerPartyApiMappers";
+import { createRestaurantForDinnerParty, updateLocationForDinnerParty } from "../utils/DinnerPartyApiMappers";
 import { postNewRestaurant } from "../services/RestaurantService";
+import { updateDinnerPartyLocationById } from "../services/DinnerPartyService";
 
 interface FilterRestaurantModalProps {
   isOpen: boolean;
@@ -88,6 +89,10 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
           setIsValidYelpCall(false);
           return;
         }
+        
+        //TODO: add call to location endpoint here
+        const updatedDinnerParty = updateLocationForDinnerParty(locationInput);
+        await updateDinnerPartyLocationById(dinnerPartyId, updatedDinnerParty);
 
         restaurantResults.forEach(async (restaurant) => {
           const createdRestaurant = createRestaurantForDinnerParty(
