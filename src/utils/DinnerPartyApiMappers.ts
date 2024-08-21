@@ -28,3 +28,9 @@ export const createVoteForRestaurant = (restaurantId: number, vote: boolean): Vo
 
     return newVote;
 }
+
+export const updateLocationForDinnerParty = (location: string): DinnerParty => {
+    const dinnerParty = new DinnerParty();
+    dinnerParty.location = location;
+    return dinnerParty;
+}
