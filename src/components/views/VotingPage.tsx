@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import CarouselCard from "../CarouselCard";
 import LoadingState from "../LoadingState";
 import { useDinnerPartyContext } from "../Context/DinnerPartyContext";
@@ -7,8 +8,14 @@ import LockVotesButton from "../LockVotesButton";
 
 const VotingPage: React.FC = () => {
   const { restaurants, dinnerParty, loading, error } = useDinnerPartyContext();
-
   const { user } = useAuthenticator();
+  const navigate = useNavigate(); // Added for redirection
+
+  useEffect(() => {
+    if (dinnerParty && dinnerParty.finalized) {
+      navigate(`/dinnerparty/${dinnerParty.dinner_party_id}/results`);
+    }
+  }, [dinnerParty, navigate]);
 
   if (loading) {
     return (
@@ -26,8 +33,6 @@ const VotingPage: React.FC = () => {
     );
   }
 
-  console.log(dinnerParty);
-
   if (!dinnerParty) return null;
 
   console.log(dinnerParty);
@@ -36,7 +41,7 @@ const VotingPage: React.FC = () => {
 
   return (
     <div className="bg-beige min-h-screen flex flex-col">
-      <h1 className="text-4xl font-bold mt-6 mb-4 text-green">{dinnerParty.party_name}</h1>
+      <h1 className="text-4xl font-bold mt-6 text-green">{dinnerParty.party_name}</h1>
       <div className="flex-1 p-4">
         {restaurants.length > 0 ? (
           restaurants.map((restaurant, index) => (
