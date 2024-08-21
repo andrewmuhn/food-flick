@@ -6,10 +6,9 @@ import { useAuthenticator } from "@aws-amplify/ui-react";
 import LockVotesButton from "../LockVotesButton";
 
 const VotingPage: React.FC = () => {
-  const { restaurants, dinnerParty, loading, error } =
-    useDinnerPartyContext();
+  const { restaurants, dinnerParty, loading, error } = useDinnerPartyContext();
 
-    const { user } = useAuthenticator();
+  const { user } = useAuthenticator();
 
   if (loading) {
     return (
@@ -29,6 +28,7 @@ const VotingPage: React.FC = () => {
 
   if (!dinnerParty) return null;
 
+  console.log(dinnerParty);
   const isAdmin = user.username === dinnerParty.createdBy;
   const isVotingLocked = dinnerParty.finalized;
 

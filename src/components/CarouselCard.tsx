@@ -40,10 +40,13 @@ const CarouselCard: React.FC<CarouselCardProps> = ({
           <h1 className="hover:cursor-pointer mt-2 text-gray-900 font-bold text-2xl tracking-tight">
             {restaurant.yelpMetaData.name}
           </h1>
+          <p className="hover:cursor-pointer py-3 text-gray-600 leading-6">
+            {restaurant.yelpMetaData.address}
+          </p>
           <img
             className="rounded-t-lg mx-auto my-4 object-contain"
             src={
-              "/src/assets/YelpAssets/Desktop/small_16/" +
+              "https://foodflickimages.s3.us-east-2.amazonaws.com/assets/YelpAssets/Desktop/small_16/" +
               restaurant.yelpMetaData.stars_url
             }
           />
@@ -51,9 +54,6 @@ const CarouselCard: React.FC<CarouselCardProps> = ({
             {restaurant.yelpMetaData.price
               ? restaurant.yelpMetaData.price
               : "N/A"}
-          </p>
-          <p className="hover:cursor-pointer py-3 text-gray-600 leading-6">
-            {restaurant.yelpMetaData.address}
           </p>
         </div>
         {/* <!-- controls --> */}
@@ -94,9 +94,7 @@ const CarouselCard: React.FC<CarouselCardProps> = ({
           </label>
         </div>
         <div className="flex justify-center w-full p-5">
-          <VotingButtons
-            restaurantId={restaurant.restaurant_id}
-          />
+          <VotingButtons restaurantId={restaurant.restaurant_id} />
         </div>
       </div>
     </div>
