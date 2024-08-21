@@ -15,7 +15,7 @@ function App() {
           <DinnerPartyProvider>
             <Routes>
               <Route path="/" Component={LandingPage} />
-              <Route path="/vote/:dinnerPartyId" Component={VotingPage} />
+              <Route path="/dinnerparty/:dinnerPartyId" Component={VotingPage} />
             </Routes>
           </DinnerPartyProvider>
         </Router>
