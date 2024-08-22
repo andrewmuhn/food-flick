@@ -17,7 +17,7 @@ const CreatePartyModal: React.FC<CreatePartyModalProps> = ({
   const [name, setName] = useState<string>("");
   const [date, setDate] = useState<string>("");
   const [time, setTime] = useState<string>("");
-  const [strategy, setStrategy] = useState<string>("");
+  // const [strategy, setStrategy] = useState<string>("");
   const [pastDateError, setPastDateError] = useState<boolean>(false);
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,7 +34,7 @@ const CreatePartyModal: React.FC<CreatePartyModalProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const dinnerPartyResponse = await postNewDinnerParty(
-      createDinnerParty(name, date, time, strategy)
+      createDinnerParty(name, date, time)
     );
     console.log(dinnerPartyResponse);
     handlePartyModalSubmit(dinnerPartyResponse);
@@ -114,7 +114,7 @@ const CreatePartyModal: React.FC<CreatePartyModalProps> = ({
               required
             />
           </div>
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">
               Voting Strategy
             </label>
@@ -127,7 +127,7 @@ const CreatePartyModal: React.FC<CreatePartyModalProps> = ({
               <option value="">Select strategy</option>
               <option value="DEFAULT">Default</option>
             </select>
-          </div>
+          </div> */}
           <button
             type="submit"
             className="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green hover:bg-green-dark focus:bg-green-dark focus:outline-none"
