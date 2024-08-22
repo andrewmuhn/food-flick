@@ -36,7 +36,6 @@ const CreatePartyModal: React.FC<CreatePartyModalProps> = ({
     const dinnerPartyResponse = await postNewDinnerParty(
       createDinnerParty(name, date, time)
     );
-    console.log(dinnerPartyResponse);
     handlePartyModalSubmit(dinnerPartyResponse);
     onClose();
   };

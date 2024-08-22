@@ -56,10 +56,12 @@ const ResultsPage: React.FC = () => {
   return (
     <div className="bg-beige min-h-screen flex flex-col items-center justify-center space-y-4 p-4">
       <h1 className="text-4xl font-bold mt-8 text-green">
+        
         {winningRestaurants.length === 1
-          ? "The winner is:"
+        
+          ? `${dinnerParty.party_name}'s winner is:`
           : winningRestaurants.length > 1
-          ? "We have a tie!"
+          ? `${dinnerParty.party_name} has ${winningRestaurants.length} winners!`
           : "No winners found."}
       </h1>
       {winningRestaurants.length > 0 ? (

@@ -30,7 +30,6 @@ export function mapYelpDataToRestaurantInfo(
   const restaurants: RestaurantInfo[] = [];
 
   yelpData.forEach((element) => {
-    console.log(element.business_hours);
     restaurants.push({
       yelp_id: element.id,
       name: element.name,

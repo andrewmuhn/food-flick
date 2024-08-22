@@ -13,9 +13,9 @@ const LandingPage: React.FC = () => {
 
   const [dinnerPartyId, setDinnerPartyId] = useState<number>(1);
   const [dinnerParties, setDinnerParties] = useState<DinnerParty[]>([]);
-  const [hostedDinnerParties, setHostedDinnerParties] = useState<DinnerParty[]>(
-    []
-  );
+  //   const [hostedDinnerParties, setHostedDinnerParties] = useState<DinnerParty[]>(
+  //     []
+  //   );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -24,15 +24,18 @@ const LandingPage: React.FC = () => {
   };
 
   const handlePartyModalSubmit = (dinnerParty: DinnerParty) => {
-    console.log("Dinner Party:", dinnerParty);
     setIsPartyModalOpen(false);
     setDinnerPartyId(dinnerParty.dinner_party_id);
     setIsRestaurantModalOpen(true);
   };
 
-  const handleRedirect = (dinnerPartyId: number) => {
+  const handleRedirect = (dinnerPartyId: number, finalized: boolean) => {
     // Redirect or proceed to /vote
-    window.location.href = `/dinnerparty/${dinnerPartyId}`;
+    if (finalized) {
+      window.location.href = `/dinnerparty/${dinnerPartyId}/results`;
+    } else {
+      window.location.href = `/dinnerparty/${dinnerPartyId}`;
+    }
   };
 
   useEffect(() => {

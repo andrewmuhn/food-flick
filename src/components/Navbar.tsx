@@ -12,7 +12,7 @@ export default function NavBar() {
 
   return (
     <nav className="bg-white max-w-full border-gray-200">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-2">
+      <div className="flex flex-wrap items-center justify-between mx-auto p-2">
         <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
           <img src="/logo.png" className="h-14" alt="FoodFlick Logo" />
         </a>

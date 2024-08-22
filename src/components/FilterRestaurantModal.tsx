@@ -2,14 +2,17 @@ import React, { useState, useCallback, useEffect } from "react";
 import geoapifyApiInstance from "../utils/GeoapifyApiInstance";
 import debounce from "lodash.debounce";
 import { getYelpInfo } from "../services/YelpService";
-import { createRestaurantForDinnerParty, updateLocationForDinnerParty } from "../utils/DinnerPartyApiMappers";
+import {
+  createRestaurantForDinnerParty,
+  updateLocationForDinnerParty,
+} from "../utils/DinnerPartyApiMappers";
 import { postNewRestaurant } from "../services/RestaurantService";
 import { updateDinnerPartyLocationById } from "../services/DinnerPartyService";
 
 interface FilterRestaurantModalProps {
   isOpen: boolean;
   dinnerPartyId: number;
-  handleRedirect: (id: number) => void;
+  handleRedirect: (id: number, finalized: boolean) => void;
 }
 
 const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
@@ -20,7 +23,7 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
   const [locationInput, setLocationInput] = useState<string>("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [selectedSuggestion, setSelectedSuggestion] = useState<string>("");
-  const [radiusInput, setRadiusInput] = useState("");
+  const [radiusInput, setRadiusInput] = useState("5");
   const [priceInput, setPriceInput] = useState("3");
   const [isVegetarian, setIsVegetarian] = useState<boolean>(false);
   const [isVegan, setIsVegan] = useState<boolean>(false);
@@ -72,12 +75,6 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
     e.preventDefault();
 
     const fetchRestaurants = async () => {
-      console.log(
-        "Fetching restaurants with:",
-        locationInput,
-        radiusInput,
-        priceInput
-      );
       try {
         const restaurantResults = await getYelpInfo(
           locationInput,
@@ -89,7 +86,7 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
           setIsValidYelpCall(false);
           return;
         }
-        
+
         //TODO: add call to location endpoint here
         const updatedDinnerParty = updateLocationForDinnerParty(locationInput);
         await updateDinnerPartyLocationById(dinnerPartyId, updatedDinnerParty);
@@ -103,7 +100,7 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
         });
 
         setIsValidYelpCall(true);
-        handleRedirect(dinnerPartyId);
+        handleRedirect(dinnerPartyId, false);
       } catch (error) {
         console.error("Failed to fetch list of restaurants", error);
       }
@@ -119,7 +116,7 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
       <div className="bg-white p-6 rounded-lg shadow-lg w-2/4 h-50">
         <h2 className="text-xl font-bold mb-4">Filter Restaurants</h2>
         {!isValidYelpCall && (
-          <p>
+          <p className="text-orange font-bold mb-2">
             Not enough restaurants found. Please update your location and/or
             filters.
           </p>
@@ -153,37 +150,42 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
           </div>
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">
-              Radius(in miles)
+              Radius
             </label>
-            <input
-              type="number"
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-              placeholder="MAX 24"
-              max="24"
-              id="miles"
-              value={radiusInput}
-              onChange={(e) => setRadiusInput(e.target.value)}
-              required
-            />
+            <div className="relative mt-6">
+              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-6 text-sm text-gray-700">
+                {radiusInput} miles
+              </div>
+              <input
+                type="range"
+                min="1"
+                max="24"
+                value={radiusInput}
+                className="block w-full slider"
+                onChange={(e) => setRadiusInput(e.target.value)}
+              />
+            </div>
+            <div className="flex justify-between text-xs px-1" id="radius">
+              <span className="w-8 text-left">1</span>
+              <span className="w-8 text-center">12</span>
+              <span className="w-8 text-right">24</span>
+            </div>
           </div>
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">
               Price Range
             </label>
-            <div className="flex justify-between text-xs px-1" id="price">
-              <span className="w-8 text-left">$</span>
-              <span className="w-8 text-left">$$</span>
-              <span className="w-8">$$$</span>
-              <span className="w-8 text-right">$$$$</span>
-            </div>
-            <input
-              type="range"
-              min="1"
-              max="4"
+            <select
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
               value={priceInput}
-              className="mt-1 block w-full slider"
               onChange={(e) => setPriceInput(e.target.value)}
-            />
+              required
+            >
+              <option value="1">$</option>
+              <option value="2">$$</option>
+              <option value="3">$$$</option>
+              <option value="4">$$$$</option>
+            </select>
           </div>
           <div className="mb-4">
             <input
