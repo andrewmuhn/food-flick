@@ -137,7 +137,7 @@ const CarouselCard: React.FC<CarouselCardProps> = ({
             >
               <img
                 className="object-contain w-16"
-                src={"/yelp_logo.png"}
+                src={"https://foodflickimages.s3.us-east-2.amazonaws.com/yelp_logo.png"}
                 alt="Link to yelp page"
               />
             </a>

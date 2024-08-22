@@ -14,7 +14,11 @@ export default function NavBar() {
     <nav className="bg-white max-w-full border-gray-200">
       <div className="flex flex-wrap items-center justify-between mx-auto p-2">
         <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-          <img src="/logo.png" className="h-14" alt="FoodFlick Logo" />
+          <img
+            src="https://foodflickimages.s3.us-east-2.amazonaws.com/logo.png"
+            className="h-14"
+            alt="FoodFlick Logo"
+          />
         </a>
 
         <button
@@ -46,7 +50,7 @@ export default function NavBar() {
             <li>
               <a
                 href="/"
-                className="block py-2 px-3 text-white bg-green rounded md:bg-transparent md:text-green md:p-0"
+                className="block py-2 px-3 text-white bg-green rounded md:bg-transparent md:text-green md:p-0 hover:bg-gray-200"
                 aria-current="page"
               >
                 Home
@@ -55,7 +59,7 @@ export default function NavBar() {
             <li>
               <button
                 onClick={handleSignOut}
-                className="block py-2 px-3 text-grey rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green md:p-0"
+                className="block py-2 px-3 text-white bg-green rounded md:bg-transparent md:text-green md:p-0 hover:bg-gray-200"
               >
                 Sign Out
               </button>
