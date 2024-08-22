@@ -6,9 +6,7 @@ interface VotingButtonsProps {
   restaurantId: number;
 }
 
-const VotingButtons: React.FC<VotingButtonsProps> = ({
-  restaurantId,
-}) => {
+const VotingButtons: React.FC<VotingButtonsProps> = ({ restaurantId }) => {
   const { removeRestaurantToRender } = useDinnerPartyContext();
 
   const handleVoteFalse = async (restaurantId: number) => {
@@ -26,7 +24,7 @@ const VotingButtons: React.FC<VotingButtonsProps> = ({
     <div className="flex flex-row justify-center space-x-4">
       <div
         onClick={() => handleVoteFalse(restaurantId)}
-        className="text-orange cursor-pointer space-x-4 bg-white rounded-full shadow-md active:translate-y-0.5 hover:bg-gray-200"
+        className="text-orange cursor-pointer space-x-4 bg-white rounded-full shadow-md active:translate-y-0.5 hover:bg-gray-300"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -46,7 +44,7 @@ const VotingButtons: React.FC<VotingButtonsProps> = ({
 
       <div
         onClick={() => handleVoteTrue(restaurantId)}
-        className="text-green cursor-pointer space-x-4 bg-white rounded-full shadow-md active:translate-y-0.5 hover:bg-gray-200"
+        className="text-green cursor-pointer space-x-4 bg-white rounded-full shadow-md active:translate-y-0.5 hover:bg-gray-300"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

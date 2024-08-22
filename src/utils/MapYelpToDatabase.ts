@@ -12,9 +12,9 @@ function createYelpStarsUrl(rating: number): string {
   if (stars < 1) {
     yelpStarsUrl = `Review_Ribbon_small_16_half@1x.png`;
   } else if (stars % 1 === 0) {
-    yelpStarsUrl = `Review_Ribbon_small_16_${Math.trunc(stars)}@1x.png`;
+    yelpStarsUrl = `Review_Ribbon_small_16_${Math.trunc(stars)}@2x.png`;
   } else {
-    yelpStarsUrl = `Review_Ribbon_small_16_${Math.trunc(stars)}_half@1x.png`;
+    yelpStarsUrl = `Review_Ribbon_small_16_${Math.trunc(stars)}_half@2x.png`;
   }
 
   return yelpStarsUrl;
@@ -30,7 +30,6 @@ export function mapYelpDataToRestaurantInfo(
   const restaurants: RestaurantInfo[] = [];
 
   yelpData.forEach((element) => {
-    console.log(element.business_hours);
     restaurants.push({
       yelp_id: element.id,
       name: element.name,

@@ -17,14 +17,25 @@ const CreatePartyModal: React.FC<CreatePartyModalProps> = ({
   const [name, setName] = useState<string>("");
   const [date, setDate] = useState<string>("");
   const [time, setTime] = useState<string>("");
-  const [strategy, setStrategy] = useState<string>("");
+  // const [strategy, setStrategy] = useState<string>("");
+  const [pastDateError, setPastDateError] = useState<boolean>(false);
+
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPastDateError(false);
+    const currentDate = new Date().toISOString().split("T")[0];
+    const inputDate = new Date(e.target.value).toISOString().split("T")[0];
+    if (currentDate <= inputDate) {
+      setDate(e.target.value);
+    } else {
+      setPastDateError(true);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const dinnerPartyResponse = await postNewDinnerParty(
-      createDinnerParty(name, date, time, strategy)
+      createDinnerParty(name, date, time)
     );
-    console.log(dinnerPartyResponse);
     handlePartyModalSubmit(dinnerPartyResponse);
     onClose();
   };
@@ -60,10 +71,11 @@ const CreatePartyModal: React.FC<CreatePartyModalProps> = ({
         </button>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
               Name
             </label>
             <input
+              id="name"
               type="text"
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
               value={name}
@@ -72,22 +84,31 @@ const CreatePartyModal: React.FC<CreatePartyModalProps> = ({
             />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
+            <label htmlFor="date" className="block text-sm font-medium text-gray-700">
               Date
             </label>
             <input
+              id="date"
               type="date"
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
               value={date}
-              onChange={(e) => setDate(e.target.value)}
+              onChange={handleDateChange}
               required
             />
+            {pastDateError ? (
+              <p className="text-orange">
+                Please choose a current or future date.
+              </p>
+            ) : (
+              ""
+            )}
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
+            <label htmlFor="time" className="block text-sm font-medium text-gray-700">
               Time
             </label>
             <input
+              id="time"
               type="time"
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
               value={time}
@@ -95,7 +116,7 @@ const CreatePartyModal: React.FC<CreatePartyModalProps> = ({
               required
             />
           </div>
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">
               Voting Strategy
             </label>
@@ -108,10 +129,11 @@ const CreatePartyModal: React.FC<CreatePartyModalProps> = ({
               <option value="">Select strategy</option>
               <option value="DEFAULT">Default</option>
             </select>
-          </div>
+          </div> */}
           <button
             type="submit"
             className="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green hover:bg-green-dark focus:bg-green-dark focus:outline-none"
+            aria-label="Create party"
           >
             Submit
           </button>

@@ -32,7 +32,6 @@ describe('CreatePartyModal', () => {
     expect(screen.getByLabelText('Name')).toBeInTheDocument();
     expect(screen.getByLabelText('Date')).toBeInTheDocument();
     expect(screen.getByLabelText('Time')).toBeInTheDocument();
-    expect(screen.getByLabelText('Voting Strategy')).toBeInTheDocument();
   });
 
   it('should not render the modal when isOpen is false', () => {
@@ -64,7 +63,6 @@ describe('CreatePartyModal', () => {
     fireEvent.change(screen.getByLabelText('Name'), { target: { value: 'Dinner Party' } });
     fireEvent.change(screen.getByLabelText('Date'), { target: { value: '2024-09-01' } });
     fireEvent.change(screen.getByLabelText('Time'), { target: { value: '18:00' } });
-    fireEvent.change(screen.getByLabelText('Voting Strategy'), { target: { value: 'DEFAULT' } });
     
     // Submit the form
     fireEvent.click(screen.getByText('Submit'));
@@ -75,5 +73,21 @@ describe('CreatePartyModal', () => {
       expect(mockHandlePartyModalSubmit).toHaveBeenCalled();
       expect(mockOnClose).toHaveBeenCalled();
     });
+  });
+
+  it('should show an error message for past dates', () => {
+    render(
+      <CreatePartyModal
+        isOpen={true}
+        onClose={mockOnClose}
+        handlePartyModalSubmit={mockHandlePartyModalSubmit}
+      />
+    );
+
+    // Set a past date
+    fireEvent.change(screen.getByLabelText('Date'), { target: { value: '2020-01-01' } });
+
+    // Check for error message
+    expect(screen.getByText('Please choose a current or future date.')).toBeInTheDocument();
   });
 });

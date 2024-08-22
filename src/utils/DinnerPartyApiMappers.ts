@@ -4,11 +4,11 @@ import { RestaurantInfo } from "../models/RestaurantInfo";
 import { Vote } from "../models/Vote";
 import { VotingStrategy } from "../models/VotingStrategy";
 
-export const createDinnerParty = (name: string, date: string, time: string, strategy: string): DinnerParty => {
+export const createDinnerParty = (name: string, date: string, time: string): DinnerParty => {
     const dinnerParty = new DinnerParty();
     dinnerParty.party_name = name;
     dinnerParty.party_date = new Date(`${date}T${time}:00.000Z`).toISOString();
-    dinnerParty.voting_strategy = VotingStrategy[strategy.toUpperCase() as keyof typeof VotingStrategy];
+    dinnerParty.voting_strategy = VotingStrategy["DEFAULT"];
     
     return dinnerParty;
 }
@@ -27,4 +27,10 @@ export const createVoteForRestaurant = (restaurantId: number, vote: boolean): Vo
     newVote.restaurant_id = restaurantId;
 
     return newVote;
+}
+
+export const updateLocationForDinnerParty = (location: string): DinnerParty => {
+    const dinnerParty = new DinnerParty();
+    dinnerParty.location = location;
+    return dinnerParty;
 }

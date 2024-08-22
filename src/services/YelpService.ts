@@ -1,5 +1,4 @@
 import { RestaurantInfo } from "../models/RestaurantInfo";
-import { YelpData } from "../models/YelpData";
 import yelpApiInstance from "../utils/YelpApiInstance";
 import { mapYelpDataToRestaurantInfo } from "../utils/MapYelpToDatabase";
 
@@ -21,7 +20,6 @@ export const getYelpInfo = async (
     const response = await yelpApiInstance.get<any>("", {
       params,
     });
-    console.log(response.data);
     
     const resp = mapYelpDataToRestaurantInfo(response.data.businesses);
     return resp;
