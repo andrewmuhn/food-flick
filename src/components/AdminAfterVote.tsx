@@ -6,7 +6,7 @@ const AdminAfterVote: React.FC = () => {
       </h2>
       <div className="flex justify-center items-center mt-4">
         <img
-          src="/lockstress.jpg"
+          src="https://foodflickimages.s3.us-east-2.amazonaws.com/lockstress.jpg"
           alt="Lock 'Em"
           className="w-80 h-auto mt-6"
         />
