@@ -72,10 +72,11 @@ const CreatePartyModal: React.FC<CreatePartyModalProps> = ({
         </button>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
               Name
             </label>
             <input
+              id="name"
               type="text"
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
               value={name}
@@ -84,10 +85,11 @@ const CreatePartyModal: React.FC<CreatePartyModalProps> = ({
             />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
+            <label htmlFor="date" className="block text-sm font-medium text-gray-700">
               Date
             </label>
             <input
+              id="date"
               type="date"
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
               value={date}
@@ -103,10 +105,11 @@ const CreatePartyModal: React.FC<CreatePartyModalProps> = ({
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
+            <label htmlFor="time" className="block text-sm font-medium text-gray-700">
               Time
             </label>
             <input
+              id="time"
               type="time"
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
               value={time}
@@ -131,6 +134,7 @@ const CreatePartyModal: React.FC<CreatePartyModalProps> = ({
           <button
             type="submit"
             className="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green hover:bg-green-dark focus:bg-green-dark focus:outline-none"
+            aria-label="Create party"
           >
             Submit
           </button>

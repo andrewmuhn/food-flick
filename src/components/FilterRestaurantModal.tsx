@@ -22,11 +22,10 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
   const [selectedSuggestion, setSelectedSuggestion] = useState<string>("");
   const [radiusInput, setRadiusInput] = useState("");
   const [priceInput, setPriceInput] = useState("3");
-  const [isVegetarian, setIsVegetarian] = useState<boolean>(false);
-  const [isVegan, setIsVegan] = useState<boolean>(false);
+  // const [isVegetarian, setIsVegetarian] = useState<boolean>(false);
+  // const [isVegan, setIsVegan] = useState<boolean>(false);
   const [isValidYelpCall, setIsValidYelpCall] = useState<boolean>(true);
 
-  // Function to fetch location suggestions
   const fetchLocationSuggestions = useCallback(
     debounce(async (input: string) => {
       if (input.length < 3 || input === selectedSuggestion) {
@@ -43,7 +42,7 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
         );
 
         const results = response.data.features.map(
-          (feature: any) => feature.properties.formatted
+          (feature: { properties: { formatted: string } }) => feature.properties.formatted
         );
         setSuggestions(results);
       } catch (error) {
@@ -185,7 +184,7 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
               onChange={(e) => setPriceInput(e.target.value)}
             />
           </div>
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <input
               type="radio"
               name="dietaryChoice"
@@ -201,7 +200,7 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
             <label className="ml-2 text-sm font-medium text-gray-700">
               Vegan
             </label>
-          </div>
+          </div> */}
           <button
             type="submit"
             className="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green hover:bg-green-dark focus:bg-green-dark focus:outline-none"

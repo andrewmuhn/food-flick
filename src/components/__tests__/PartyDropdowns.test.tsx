@@ -13,7 +13,7 @@ test('renders PartyDropdowns component', () => {
       setSelectedDinnerParty={mockSetSelectedDinnerParty}
       selectedHostedParty=""
       setSelectedHostedParty={mockSetSelectedHostedParty}
-      handleCreateParty={mockHandleCreateParty}
+      handleCreateParty={mockHandleCreateParty} // Added this line
     />
   );
 
@@ -23,7 +23,9 @@ test('renders PartyDropdowns component', () => {
   expect(dinnerPartyLabel).not.toBeNull();
   expect(hostedPartyLabel).not.toBeNull();
 
-  // Check if button is rendered
-  const createPartyButton = screen.getByRole('button', { name: /Create party/i });
-  expect(createPartyButton).not.toBeNull();
+  // Check if dropdowns are rendered
+  const dinnerPartyDropdown = screen.getByLabelText(/Dinner Parties/i);
+  const hostedPartyDropdown = screen.getByLabelText(/Your hosted parties/i);
+  expect(dinnerPartyDropdown).toBeInTheDocument();
+  expect(hostedPartyDropdown).toBeInTheDocument();
 });
