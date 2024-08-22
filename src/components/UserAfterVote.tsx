@@ -6,7 +6,7 @@ const UserAfterVote: React.FC = () => {
       </h2>
       <div className="flex justify-center items-center mt-4">
         <img
-          src="/sad-pablo-lonely.gif"
+          src="https://foodflickimages.s3.us-east-2.amazonaws.com/sad-pablo-lonely.gif"
           alt="Count the votes"
           className="w-120 h-auto mt-6"
         />
