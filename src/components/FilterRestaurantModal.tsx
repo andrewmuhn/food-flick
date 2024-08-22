@@ -2,9 +2,13 @@ import React, { useState, useCallback, useEffect } from "react";
 import geoapifyApiInstance from "../utils/GeoapifyApiInstance";
 import debounce from "lodash.debounce";
 import { getYelpInfo } from "../services/YelpService";
-import { createRestaurantForDinnerParty, updateLocationForDinnerParty } from "../utils/DinnerPartyApiMappers";
+import {
+  createRestaurantForDinnerParty,
+  updateLocationForDinnerParty,
+} from "../utils/DinnerPartyApiMappers";
 import { postNewRestaurant } from "../services/RestaurantService";
 import { updateDinnerPartyLocationById } from "../services/DinnerPartyService";
+import { Range, getTrackBackground } from "react-range";
 
 interface FilterRestaurantModalProps {
   isOpen: boolean;
@@ -25,6 +29,7 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
   const [isVegetarian, setIsVegetarian] = useState<boolean>(false);
   const [isVegan, setIsVegan] = useState<boolean>(false);
   const [isValidYelpCall, setIsValidYelpCall] = useState<boolean>(true);
+  const [priceRange, setPriceRange] = useState([1, 4]);
 
   // Function to fetch location suggestions
   const fetchLocationSuggestions = useCallback(
@@ -89,7 +94,7 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
           setIsValidYelpCall(false);
           return;
         }
-        
+
         //TODO: add call to location endpoint here
         const updatedDinnerParty = updateLocationForDinnerParty(locationInput);
         await updateDinnerPartyLocationById(dinnerPartyId, updatedDinnerParty);
@@ -176,13 +181,43 @@ const FilterRestaurantModal: React.FC<FilterRestaurantModalProps> = ({
               <span className="w-8">$$$</span>
               <span className="w-8 text-right">$$$$</span>
             </div>
-            <input
-              type="range"
-              min="1"
-              max="4"
-              value={priceInput}
-              className="mt-1 block w-full slider"
-              onChange={(e) => setPriceInput(e.target.value)}
+            <Range
+              step={1}
+              min={1}
+              max={4}
+              values={priceRange}
+              onChange={(values) => setPriceRange(values)}
+              renderTrack={({ props, children }) => (
+                <div
+                  {...props}
+                  style={{
+                    ...props.style,
+                    height: "6px",
+                    width: "100%",
+                    background: getTrackBackground({
+                      values: priceRange,
+                      colors: ["#ccc", "#548BF4", "#ccc"],
+                      min: 1,
+                      max: 4,
+                    }),
+                  }}
+                >
+                  {children}
+                </div>
+              )}
+              renderThumb={({ props }) => (
+                <div
+                  {...props}
+                  style={{
+                    ...props.style,
+                    height: "16px",
+                    width: "16px",
+                    backgroundColor: "#FFF",
+                    border: "1px solid #CCC",
+                    borderRadius: "50%",
+                  }}
+                />
+              )}
             />
           </div>
           <div className="mb-4">
