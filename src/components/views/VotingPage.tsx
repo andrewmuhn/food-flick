@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CarouselCard from "../CarouselCard";
 import LoadingState from "../LoadingState";
@@ -9,7 +9,7 @@ import UserAfterVote from "../UserAfterVote";
 import AdminAfterVote from "../AdminAfterVote";
 
 const VotingPage: React.FC = () => {
-  const { restaurants, dinnerParty, error } = useDinnerPartyContext();
+  const { restaurants, dinnerParty, loading, error } = useDinnerPartyContext();
 
   const { user } = useAuthenticator();
   const navigate = useNavigate(); // Added for redirection
@@ -20,15 +20,7 @@ const VotingPage: React.FC = () => {
     }
   }, [dinnerParty, navigate]);
 
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (dinnerParty && restaurants.length > 0) {
-      setLoading(false);
-    }
-  }, [dinnerParty, restaurants]);
-
-  if (loading) {
+  if (loading || !dinnerParty) {
     return (
       <div className="bg-beige min-h-screen flex items-center justify-center">
         <LoadingState loadingMessage={"Prepping your restaurants..."} />
@@ -46,15 +38,17 @@ const VotingPage: React.FC = () => {
 
   if (!dinnerParty) return null;
 
-  console.log(dinnerParty);
   const isAdmin = user.username === dinnerParty.createdBy;
   const isVotingLocked = dinnerParty.finalized;
 
   return (
     <div className="bg-beige min-h-screen flex flex-col">
-      <h1 className="text-4xl font-bold mt-6 mb-4 text-green">
+      <h1 className="text-4xl font-bold mt-8 mb-4 text-green">
         {dinnerParty.party_name}
       </h1>
+      <h4 className="font-medium text-green">
+        {dinnerParty.location}
+      </h4>
       <div className="flex-1 p-4">
         {restaurants.length > 0 ? (
           restaurants.map((restaurant, index) => (
