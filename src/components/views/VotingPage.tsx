@@ -61,7 +61,7 @@ const VotingPage: React.FC = () => {
           ))
         ) : (
           <>
-            {isAdmin && !isVotingLocked ? (
+            {isAdmin && !isVotingLocked && dinnerParty ? (
               <AdminAfterVote />
             ) : (
               <UserAfterVote />
