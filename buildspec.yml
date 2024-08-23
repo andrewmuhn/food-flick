@@ -7,11 +7,10 @@ phases:
     commands:
       - echo Installing dependencies...
       - npm config set registry https://registry.npmjs.org/
-      - npm ci --registry=https://registry.npmjs.org/
+      - npm i --registry=https://registry.npmjs.org/
   pre_build:
     commands:
       - echo Running pre-build steps...
-      - npm cache clean --force
   build:
     commands:
       - echo Building the Vite React app...
